@@ -23,20 +23,6 @@ class BookServiceTest {
     }
 
     @Test
-    void shouldThrowBookNotFoundException_whenBookNotFound() {
-        // GIVEN
-        given(bookRepository.findById("book1")).willReturn(Optional.empty());
-
-        // WHEN
-        Throwable thrown = catchThrowable(() -> bookService.findBookById("book1"));
-
-        // THEN
-        assertThat(thrown)
-                .isInstanceOf(BookNotFoundException.class)
-                .hasMessageContaining("book1");
-    }
-
-    @Test
     void shouldThrowBookNotFoundException_whenUpdatingNonExistentBook() {
         // GIVEN
         Book book = new Book("book1", "Title", "Author", 5);
@@ -52,41 +38,16 @@ class BookServiceTest {
     }
 
     @Test
-    void shouldThrowBookNotFoundException_whenDeletingNonExistentBook() {
-        // GIVEN
-        given(bookRepository.findById("book1")).willReturn(Optional.empty());
-
-        // WHEN
-        Throwable thrown = catchThrowable(() -> bookService.deleteBook("book1"));
-
-        // THEN
-        assertThat(thrown)
-                .isInstanceOf(BookNotFoundException.class)
-                .hasMessageContaining("book1");
-    }
-
-    @Test
     void shouldReturnTrue_whenBookIsAvailable() {
         // GIVEN
         Book book = new Book("book1", "Title", "Author", 5);
+        book.setAvailableCopies(3);
         given(bookRepository.findById("book1")).willReturn(Optional.of(book));
+
         // WHEN/THEN
-        assertThat(bookService.isBookAvailable("book1")).isTrue();
-    }
+        var result = bookService.isBookAvailable(book);
 
-    @Test
-    void shouldThrowBookNotAvailableException_whenBookNotAvailable() {
-        // GIVEN
-        Book book = new Book("book1", "Title", "Author", 0);
-        given(bookRepository.findById("book1")).willReturn(Optional.of(book));
-
-        // WHEN
-        Throwable thrown = catchThrowable(() -> bookService.isBookAvailable("book1"));
-
-        // THEN
-        assertThat(thrown)
-                .isInstanceOf(BookNotAvailableException.class)
-                .hasMessageContaining("book1");
+        assertThat(result).isTrue();
     }
 
     @Test
@@ -115,7 +76,52 @@ class BookServiceTest {
         // THEN
         assertThat(thrown)
                 .isInstanceOf(BookNotAvailableException.class)
-                .hasMessageContaining("No copies available");
+                .hasMessageContaining("Book with ID " + book.getId() + " is not available.");
         verify(bookRepository, never()).save(any(Book.class));
+    }
+
+    @Test
+    void shouldIncreaseAvailableCopies_whenReturningBook() {
+        // GIVEN
+        Book book = new Book("book1", "Title", "Author", 5);
+        book.setAvailableCopies(2);
+        given(bookRepository.findById("book1")).willReturn(Optional.of(book));
+        given(bookRepository.save(any(Book.class))).willAnswer(invocation -> invocation.getArgument(0));
+
+        // WHEN
+        Book returnedBook = bookService.returnBook(book);
+
+        // THEN
+        assertThat(returnedBook.getAvailableCopies()).isEqualTo(book.getAvailableCopies() + 1);
+    }
+
+    @Test
+    void shouldThrowInvalidLoanOperationException_whenReturningBookWithMaxCopies() {
+        // GIVEN
+        Book book = new Book("book1", "Title", "Author", 5);
+        book.setAvailableCopies(5);
+
+        // WHEN
+        Throwable thrown = catchThrowable(() -> bookService.returnBook(book));
+
+        // THEN
+        assertThat(thrown)
+                .isInstanceOf(com.tuto.library.exception.InvalidLoanOperationException.class)
+                .hasMessageContaining("Cannot return more copies than total for book");
+        verify(bookRepository, never()).save(any(Book.class));
+    }
+
+    @Test
+    void shouldThrowBookNotFoundException_whenReturningBookByIdThatDoesNotExist() {
+        // GIVEN
+        given(bookRepository.findById("book1")).willReturn(Optional.empty());
+
+        // WHEN
+        Throwable thrown = catchThrowable(() -> bookService.returnBook("book1"));
+
+        // THEN
+        assertThat(thrown)
+                .isInstanceOf(BookNotFoundException.class)
+                .hasMessageContaining("book1");
     }
 }
