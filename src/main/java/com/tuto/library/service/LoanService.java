@@ -26,7 +26,6 @@ public class LoanService {
         checkLoanIsActive(id, loan);
         loan.setReturnDate(LocalDate.now());
         loan.setStatus(LoanStatus.RETURNED);
-        bookService.returnBook(loan.getBookId());
         return loanRepository.save(loan);
     }
 

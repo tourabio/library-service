@@ -2,7 +2,6 @@ package com.tuto.library.service;
 
 import com.tuto.library.domain.Book;
 import com.tuto.library.exception.BookNotFoundException;
-import com.tuto.library.exception.InvalidLoanOperationException;
 import com.tuto.library.repository.BookRepository;
 
 public class BookService {
@@ -15,29 +14,5 @@ public class BookService {
     public Book findBookById(String id) {
         return bookRepository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException("Book with ID " + id + " not found."));
-    }
-
-    public Book updateBook(Book book) {
-        return bookRepository.save(book);
-    }
-
-    public Book returnBook(String bookId) {
-        Book book = findBookById(bookId);
-        checkTotalCopiesLessThanAvailableCopies(book);
-        var updatedBook = increaseBookAvailableCopies(book);
-        return updatedBook;
-    }
-
-    private Book increaseBookAvailableCopies(Book book) {
-        Book updatedBook = new Book(book.getId(), book.getTitle(), book.getAuthor(), book.getTotalCopies());
-        updatedBook.setAvailableCopies(book.getAvailableCopies() + 1);
-        return updateBook(updatedBook);
-    }
-
-    private void checkTotalCopiesLessThanAvailableCopies(final Book book) {
-        if (book.getAvailableCopies() >= book.getTotalCopies()) {
-            throw new InvalidLoanOperationException(
-                    "Cannot return more copies than total for book: " + book.getTitle());
-        }
     }
 }
