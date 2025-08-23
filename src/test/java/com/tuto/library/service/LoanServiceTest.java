@@ -49,8 +49,10 @@ class LoanServiceTest {
         loan.setStatus(LoanStatus.RETURNED);
         loan.setReturnDate(LocalDate.now());
         given(loanRepository.findById("loan1")).willReturn(Optional.of(loan));
+
         // WHEN
         Throwable thrown = catchThrowable(() -> loanService.returnLoan("loan1"));
+
         // THEN
         assertThat(thrown)
                 .isInstanceOf(InvalidLoanOperationException.class)
