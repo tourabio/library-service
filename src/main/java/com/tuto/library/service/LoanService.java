@@ -1,0 +1,71 @@
+package com.tuto.library.service;
+
+import com.tuto.library.domain.Book;
+import com.tuto.library.domain.Loan;
+import com.tuto.library.domain.LoanStatus;
+import com.tuto.library.exception.InvalidLoanOperationException;
+import com.tuto.library.exception.LoanNotFoundException;
+import com.tuto.library.repository.LoanRepository;
+import java.time.LocalDate;
+
+public class LoanService {
+    private final LoanRepository loanRepository;
+    private final BookService bookService;
+
+    public LoanService(LoanRepository loanRepository, BookService bookService) {
+        this.loanRepository = loanRepository;
+        this.bookService = bookService;
+    }
+
+    public Loan createLoan(Loan loan) {
+        Book book = bookService.findBookById(loan.getBookId());
+        bookService.isBookAvailable(book);
+        bookService.borrowBook(book);
+        return loanRepository.save(loan);
+    }
+
+    public Loan findLoanById(String id) {
+        return loanRepository.findById(id)
+                .orElseThrow(() -> new LoanNotFoundException("Loan with ID " + id + " not found."));
+    }
+
+    public Loan returnLoan(String id) {
+        Loan loan = findLoanById(id);
+        if (loan.getStatus() != LoanStatus.ACTIVE) {
+            throw new InvalidLoanOperationException("Loan with ID " + id + " is not active.");
+        }
+        returnLoan(loan);
+        return loanRepository.save(loan);
+    }
+
+    public void returnLoan(Loan loan) {
+        loan.setReturnDate(LocalDate.now());
+        loan.setStatus(LoanStatus.RETURNED);
+        bookService.returnBook(loan.getBookId());
+    }
+
+    public Loan renewLoan(String id, int extraDays) {
+        Loan loan = findLoanById(id);
+        return renewLoan(loan, extraDays);
+    }
+
+    public Loan renewLoan(Loan loan, int extraDays) {
+        if (loan.getStatus() == LoanStatus.RETURNED) {
+            throw new InvalidLoanOperationException("Cannot renew a returned loan");
+        }
+        if (isLoanOverdue(loan)) {
+            throw new InvalidLoanOperationException("Cannot renew an overdue loan");
+        }
+        loan.setDueDate(loan.getDueDate().plusDays(extraDays));
+        return loanRepository.save(loan);
+    }
+
+    public boolean isLoanOverdue(Loan loan) {
+        return loan.getStatus() != LoanStatus.RETURNED && LocalDate.now().isAfter(loan.getDueDate());
+    }
+
+    public boolean isLoanOverdue(String id) {
+        Loan loan = findLoanById(id);
+        return isLoanOverdue(loan);
+    }
+}
