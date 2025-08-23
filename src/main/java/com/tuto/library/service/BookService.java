@@ -21,17 +21,17 @@ public class BookService {
         return bookRepository.save(book);
     }
 
+    public Book returnBook(String bookId) {
+        Book book = findBookById(bookId);
+        checkTotalCopiesLessThanAvailableCopies(book);
+        var updatedBook = increaseBookAvailableCopies(book);
+        return updatedBook;
+    }
 
-    public Book returnBook(Book book) {
+    private Book increaseBookAvailableCopies(Book book) {
         Book updatedBook = new Book(book.getId(), book.getTitle(), book.getAuthor(), book.getTotalCopies());
         updatedBook.setAvailableCopies(book.getAvailableCopies() + 1);
         return updateBook(updatedBook);
-    }
-
-    public void returnBook(String bookId) {
-        Book book = findBookById(bookId);
-        checkTotalCopiesLessThanAvailableCopies(book);
-        returnBook(book);
     }
 
     private void checkTotalCopiesLessThanAvailableCopies(final Book book) {
