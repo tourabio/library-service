@@ -11,15 +11,6 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
-    public Member addMember(Member member) {
-        validateMemberInput(member.getId(), member.getName(), member.getEmail());
-        return memberRepository.save(member);
-    }
-
-    public Member findMemberById(String id) {
-        return memberRepository.findById(id)
-                .orElseThrow(() -> new MemberNotFoundException("Member with ID " + id + " not found."));
-    }
 
     public Member updateMember(Member member) {
         checkMemberExists(member.getId());

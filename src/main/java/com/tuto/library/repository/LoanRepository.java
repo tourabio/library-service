@@ -11,12 +11,4 @@ public interface LoanRepository {
     Optional<Loan> findById(String loanId);
     
     Optional<Loan> findActiveByBookAndMember(String bookId, String memberId);
-    
-    List<Loan> findByMemberId(String memberId);
-    
-    List<Loan> findOverdueLoans();
-    
-    List<Loan> findActiveLoans();
-    
-    List<Loan> findByBookId(String bookId);
 }

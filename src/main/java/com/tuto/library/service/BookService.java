@@ -19,19 +19,7 @@ public class BookService {
     }
 
     public Book updateBook(Book book) {
-        checkBookExists(book.getId());
         return bookRepository.save(book);
-    }
-
-    public void deleteBook(String id) {
-        checkBookExists(id);
-        bookRepository.deleteById(id);
-    }
-
-    private void checkBookExists(String id) {
-        if (bookRepository.findById(id).isEmpty()) {
-            throw new BookNotFoundException("Book with ID " + id + " not found.");
-        }
     }
 
     public boolean isBookAvailable(Book book) {

@@ -23,21 +23,6 @@ class BookServiceTest {
     }
 
     @Test
-    void shouldThrowBookNotFoundException_whenUpdatingNonExistentBook() {
-        // GIVEN
-        Book book = new Book("book1", "Title", "Author", 5);
-        given(bookRepository.findById("book1")).willReturn(Optional.empty());
-
-        // WHEN
-        Throwable thrown = catchThrowable(() -> bookService.updateBook(book));
-
-        // THEN
-        assertThat(thrown)
-                .isInstanceOf(BookNotFoundException.class)
-                .hasMessageContaining("book1");
-    }
-
-    @Test
     void shouldReturnTrue_whenBookIsAvailable() {
         // GIVEN
         Book book = new Book("book1", "Title", "Author", 5);

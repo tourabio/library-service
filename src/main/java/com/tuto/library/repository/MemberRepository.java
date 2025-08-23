@@ -10,11 +10,5 @@ public interface MemberRepository {
     
     Member save(Member member);
     
-    List<Member> findAll();
-    
-    Optional<Member> findByEmail(String email);
-    
     void deleteById(String memberId);
-    
-    boolean existsById(String memberId);
 }
