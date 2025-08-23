@@ -1,6 +1,5 @@
 package com.tuto.library.service;
 
-import com.tuto.library.domain.Book;
 import com.tuto.library.domain.Loan;
 import com.tuto.library.domain.LoanStatus;
 import com.tuto.library.exception.InvalidLoanOperationException;
@@ -17,13 +16,6 @@ public class LoanService {
         this.bookService = bookService;
     }
 
-    public Loan createLoan(Loan loan) {
-        Book book = bookService.findBookById(loan.getBookId());
-        bookService.isBookAvailable(book);
-        bookService.borrowBook(book);
-        return loanRepository.save(loan);
-    }
-
     public Loan findLoanById(String id) {
         return loanRepository.findById(id)
                 .orElseThrow(() -> new LoanNotFoundException("Loan with ID " + id + " not found."));
@@ -31,41 +23,17 @@ public class LoanService {
 
     public Loan returnLoan(String id) {
         Loan loan = findLoanById(id);
-        if (loan.getStatus() != LoanStatus.ACTIVE) {
-            throw new InvalidLoanOperationException("Loan with ID " + id + " is not active.");
-        }
-        returnLoan(loan);
-        return loanRepository.save(loan);
-    }
-
-    public void returnLoan(Loan loan) {
+        checkLoanIsActive(id, loan);
         loan.setReturnDate(LocalDate.now());
         loan.setStatus(LoanStatus.RETURNED);
         bookService.returnBook(loan.getBookId());
-    }
-
-    public Loan renewLoan(String id, int extraDays) {
-        Loan loan = findLoanById(id);
-        return renewLoan(loan, extraDays);
-    }
-
-    public Loan renewLoan(Loan loan, int extraDays) {
-        if (loan.getStatus() == LoanStatus.RETURNED) {
-            throw new InvalidLoanOperationException("Cannot renew a returned loan");
-        }
-        if (isLoanOverdue(loan)) {
-            throw new InvalidLoanOperationException("Cannot renew an overdue loan");
-        }
-        loan.setDueDate(loan.getDueDate().plusDays(extraDays));
         return loanRepository.save(loan);
     }
 
-    public boolean isLoanOverdue(Loan loan) {
-        return loan.getStatus() != LoanStatus.RETURNED && LocalDate.now().isAfter(loan.getDueDate());
+    private void checkLoanIsActive(final String id, final Loan loan) {
+        if (loan.getStatus() != LoanStatus.ACTIVE) {
+            throw new InvalidLoanOperationException("Loan with ID " + id + " is not active.");
+        }
     }
 
-    public boolean isLoanOverdue(String id) {
-        Loan loan = findLoanById(id);
-        return isLoanOverdue(loan);
-    }
 }

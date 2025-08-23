@@ -11,7 +11,6 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
-
     public Member updateMember(Member member) {
         checkMemberExists(member.getId());
         validateMemberInput(member.getId(), member.getName(), member.getEmail());
@@ -29,19 +28,19 @@ public class MemberService {
         memberRepository.deleteById(id);
     }
 
-    public boolean isValidEmail(String email) {
-        return email != null && email.contains("@") && email.contains(".") && email.length() > 5;
-    }
-
-    public void validateMemberInput(String id, String name, String email) {
+    private void validateMemberInput(String id, String name, String email) {
         if (id == null || id.trim().isEmpty()) {
             throw new IllegalArgumentException("Member ID cannot be null or empty");
         }
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Member name cannot be null or empty");
         }
-        if (email == null || !isValidEmail(email)) {
+        if (!isValidEmail(email)) {
             throw new IllegalArgumentException("Invalid email format");
         }
+    }
+
+    private boolean isValidEmail(String email) {
+        return email != null && email.contains("@") && email.contains(".") && email.length() > 5;
     }
 }
