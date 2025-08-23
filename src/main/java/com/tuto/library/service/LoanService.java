@@ -1,0 +1,38 @@
+package com.tuto.library.service;
+
+import com.tuto.library.domain.Loan;
+import com.tuto.library.domain.LoanStatus;
+import com.tuto.library.exception.InvalidLoanOperationException;
+import com.tuto.library.exception.LoanNotFoundException;
+import com.tuto.library.repository.LoanRepository;
+import java.time.LocalDate;
+
+public class LoanService {
+    private final LoanRepository loanRepository;
+    private final BookService bookService;
+
+    public LoanService(LoanRepository loanRepository, BookService bookService) {
+        this.loanRepository = loanRepository;
+        this.bookService = bookService;
+    }
+
+    public Loan findLoanById(String id) {
+        return loanRepository.findById(id)
+                .orElseThrow(() -> new LoanNotFoundException("Loan with ID " + id + " not found."));
+    }
+
+    public Loan returnLoan(String id) {
+        Loan loan = findLoanById(id);
+        checkLoanIsActive(id, loan);
+        loan.setReturnDate(LocalDate.now());
+        loan.setStatus(LoanStatus.RETURNED);
+        return loanRepository.save(loan);
+    }
+
+    private void checkLoanIsActive(final String id, final Loan loan) {
+        if (loan.getStatus() != LoanStatus.ACTIVE) {
+            throw new InvalidLoanOperationException("Loan with ID " + id + " is not active.");
+        }
+    }
+
+}
