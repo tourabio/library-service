@@ -17,6 +17,14 @@ Before setting up this project, ensure you have the following installed:
 
 #### Windows
 
+**Option 1: Using Chocolatey (Recommended)**
+
+1. Install Chocolatey if not already installed: Follow instructions at [Chocolatey Installation](https://chocolatey.org/install)
+2. Install OpenJDK 21: `choco install openjdk21`
+3. Verify installation: Open Command Prompt and run `java -version`
+
+**Option 2: Manual Installation**
+
 1. Download Java 21 from [Oracle JDK 21](https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html) or [OpenJDK](https://openjdk.java.net/install/)
 2. Run the installer and follow the on-screen instructions
 3. Set environment variables:
@@ -41,6 +49,14 @@ Before setting up this project, ensure you have the following installed:
 ### Apache Maven 3.8.6 Installation
 
 #### Windows
+
+**Option 1: Using Chocolatey (Recommended)**
+
+1. Install Chocolatey if not already installed: Follow instructions at [Chocolatey Installation](https://chocolatey.org/install)
+2. Install Apache Maven 3.8.6: `choco install maven`
+3. Verify installation: Open Command Prompt and run `mvn -version`
+
+**Option 2: Manual Installation**
 
 1. Download Apache Maven 3.8.6 from [Apache Maven Downloads](https://maven.apache.org/download.cgi)
 2. Extract the zip file to a directory (e.g., `C:\apache-maven-3.8.6`)
