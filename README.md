@@ -46,14 +46,14 @@ Before setting up this project, ensure you have the following installed:
 4. Reload shell: `source ~/.zshrc`
 5. Verify installation: `java -version`
 
-### Apache Maven 3.8.6 Installation
+### Apache Maven 3.8.6 (or higher) Installation
 
 #### Windows
 
 **Option 1: Using Chocolatey (Recommended)**
 
 1. Install Chocolatey if not already installed: Follow instructions at [Chocolatey Installation](https://chocolatey.org/install)
-2. Install Apache Maven 3.8.6: `choco install maven`
+2. Install Apache Maven 3.8.6 or higher: `choco install maven`
 3. Verify installation: Open Command Prompt and run `mvn -version`
 
 **Option 2: Manual Installation**
