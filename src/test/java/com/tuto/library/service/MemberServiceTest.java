@@ -1,21 +1,22 @@
 package com.tuto.library.service;
 
 import com.tuto.library.repository.MemberRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 class MemberServiceTest {
-    private MemberRepository memberRepository;
-    private MemberService memberService;
+    @Mock
+    MemberRepository memberRepository;
 
-    @BeforeEach
-    void setUp() {
-        memberRepository = BDDMockito.mock(MemberRepository.class);
-        memberService = new MemberService(memberRepository);
-    }
+    @InjectMocks
+    MemberService memberService;
 
     @Test
     void shouldThrowMemberNotFoundException_whenDeletingNonExistentMember() {
+        //TODO 1.0 : @Mohamed Sayed, implement this test
     }
 }
