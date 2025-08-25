@@ -16,20 +16,28 @@ public class LoanService {
         this.bookService = bookService;
     }
 
+    public Loan createLoan(Loan loan) {
+//        Book book = bookService.findBookById(loan.getBookId());
+//        bookService.isBookAvailable(book);
+//        bookService.borrowBook(book);
+        return loanRepository.save(loan);
+    }
+
     public Loan findLoanById(String id) {
         return loanRepository.findById(id)
                 .orElseThrow(() -> new LoanNotFoundException("Loan with ID " + id + " not found."));
     }
 
-    public Loan returnLoan(String id) {
+    public Loan processLoanReturn(String id) {
         Loan loan = findLoanById(id);
-        checkLoanIsActive(id, loan);
+        validateLoanIsActive(id, loan);
         loan.setReturnDate(LocalDate.now());
         loan.setStatus(LoanStatus.RETURNED);
+//        bookService.returnBook(loan.getBookId());
         return loanRepository.save(loan);
     }
 
-    private void checkLoanIsActive(final String id, final Loan loan) {
+    private void validateLoanIsActive(final String id, final Loan loan) {
         if (loan.getStatus() != LoanStatus.ACTIVE) {
             throw new InvalidLoanOperationException("Loan with ID " + id + " is not active.");
         }

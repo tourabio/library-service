@@ -1,18 +1,22 @@
 package com.tuto.library.service;
 
 import com.tuto.library.repository.BookRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 class BookServiceTest {
-    private BookRepository bookRepository;
+    @Mock
+    BookRepository bookRepository;
+
+    @InjectMocks
     private BookService bookService;
 
-    @BeforeEach
-    void setUp() {
-        bookRepository = BDDMockito.mock(BookRepository.class);
-        bookService = new BookService(bookRepository);
+    @Test
+    void shouldThrowBookNotFoundException_whenReturningBookByIdThatDoesNotExist() {
     }
 
     @Test
@@ -33,9 +37,5 @@ class BookServiceTest {
 
     @Test
     void shouldThrowInvalidLoanOperationException_whenReturningBookWithMaxCopies() {
-    }
-
-    @Test
-    void shouldThrowBookNotFoundException_whenReturningBookByIdThatDoesNotExist() {
     }
 }
