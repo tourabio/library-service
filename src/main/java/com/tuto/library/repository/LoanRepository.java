@@ -1,11 +1,9 @@
 package com.tuto.library.repository;
 
 import com.tuto.library.domain.Loan;
-import java.util.Optional;
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import jakarta.enterprise.context.ApplicationScoped;
 
-public interface LoanRepository {
-
-    Loan save(Loan loan);
-
-    Optional<Loan> findById(String loanId);
+@ApplicationScoped
+public class LoanRepository implements PanacheRepository<Loan> {
 }

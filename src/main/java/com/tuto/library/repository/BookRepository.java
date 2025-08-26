@@ -1,11 +1,9 @@
 package com.tuto.library.repository;
 
 import com.tuto.library.domain.Book;
-import java.util.Optional;
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import jakarta.enterprise.context.ApplicationScoped;
 
-public interface BookRepository {
-
-    Optional<Book> findById(String bookId);
-
-    Book save(Book book);
+@ApplicationScoped
+public class BookRepository implements PanacheRepository<Book> {
 }

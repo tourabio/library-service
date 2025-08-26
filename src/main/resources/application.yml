@@ -1,0 +1,15 @@
+quarkus:
+  datasource:
+    db-kind: postgresql
+    devservices:
+      image-name: postgres:16.3
+      db-name: library
+
+    username: libraryuser
+    password: librarypass2025
+
+  application:
+    name: Library Service
+
+  http:
+    root-path: /api

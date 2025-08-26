@@ -1,13 +1,9 @@
 package com.tuto.library.repository;
 
 import com.tuto.library.domain.Member;
-import java.util.Optional;
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import jakarta.enterprise.context.ApplicationScoped;
 
-public interface MemberRepository {
-
-    Optional<Member> findById(String memberId);
-
-    Member save(Member member);
-
-    void deleteById(String memberId);
+@ApplicationScoped
+public class MemberRepository implements PanacheRepository<Member> {
 }
