@@ -1,0 +1,57 @@
+// Modern Library Theme - Angular 18
+
+// Brown Library Color Palette
+$library-deep-brown: #3E2723;
+$library-medium-brown: #5D4037;
+$library-light-brown: #8D6E63;
+$library-warm-beige: #EFEBE9;
+$library-accent-gold: #FFB300;
+$library-error-red: #D32F2F;
+$library-success-green: #388E3C;
+
+// Semantic color mapping (simplified for now)
+$primary-color: $library-deep-brown;
+$secondary-color: $library-medium-brown;
+$accent-color: $library-accent-gold;
+$background-color: $library-warm-beige;
+$text-color: $library-deep-brown;
+$error-color: $library-error-red;
+$success-color: $library-success-green;
+
+// Typography
+$font-family-serif: 'Georgia', 'Times New Roman', serif;
+$font-family-sans: 'Roboto', 'Helvetica Neue', sans-serif;
+
+// Spacing
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-xxl: 48px;
+
+// Breakpoints
+$breakpoint-mobile: 768px;
+$breakpoint-tablet: 1024px;
+$breakpoint-desktop: 1200px;
+$breakpoint-wide: 1400px;
+
+// Shadows
+$shadow-light: 0 2px 4px rgba($library-deep-brown, 0.1);
+$shadow-medium: 0 4px 8px rgba($library-deep-brown, 0.15);
+$shadow-heavy: 0 8px 16px rgba($library-deep-brown, 0.2);
+$shadow-focus: 0 0 0 3px rgba($library-accent-gold, 0.3);
+
+// Borders
+$border-radius-sm: 4px;
+$border-radius: 8px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
+$border-radius-full: 50px;
+$border-color: rgba($library-medium-brown, 0.3);
+$border-color-light: rgba($library-light-brown, 0.2);
+
+// Animations
+$transition-fast: 0.2s ease-out;
+$transition-normal: 0.3s ease-out;
+$transition-slow: 0.5s ease-out;

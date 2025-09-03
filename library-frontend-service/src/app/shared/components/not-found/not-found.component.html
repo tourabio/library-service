@@ -1,0 +1,67 @@
+<main class="not-found-container" role="main">
+  <div class="not-found-content">
+    <!-- Hero Image Section -->
+    <div class="not-found-hero">
+      <img 
+        [src]="notFoundImagePath" 
+        alt="Page not found illustration - A person looking through books in a library"
+        class="not-found-image"
+        loading="lazy"
+      />
+    </div>
+
+    <!-- Content Section -->
+    <div class="not-found-text">
+      <h1 class="not-found-title">
+        <span class="error-code" aria-label="Error code 404">404</span>
+        Page Not Found
+      </h1>
+      
+      <p class="not-found-message">
+        We're sorry, but the page you're looking for seems to have wandered off into the library stacks. 
+        It might be in the restricted section, or perhaps it's been checked out by another reader.
+      </p>
+      
+      <div class="not-found-suggestion">
+        <p>Here's what you can do:</p>
+        <ul>
+          <li>Double-check the URL for any typing errors</li>
+          <li>Navigate back to the main library collection</li>
+          <li>Use the search to find what you're looking for</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="not-found-actions">
+      <button 
+        mat-raised-button 
+        color="primary"
+        class="btn-primary"
+        (click)="navigateToHome()"
+        aria-label="Navigate to books page"
+      >
+        <mat-icon>home</mat-icon>
+        Return to Library
+      </button>
+      
+      <button 
+        mat-stroked-button
+        class="btn-secondary"
+        (click)="goBack()"
+        aria-label="Go back to previous page"
+      >
+        <mat-icon>arrow_back</mat-icon>
+        Go Back
+      </button>
+    </div>
+
+    <!-- Additional Help -->
+    <div class="not-found-help">
+      <p class="help-text">
+        <mat-icon class="help-icon">info</mat-icon>
+        Still need help? The librarian at the front desk is always ready to assist you in finding what you need.
+      </p>
+    </div>
+  </div>
+</main>

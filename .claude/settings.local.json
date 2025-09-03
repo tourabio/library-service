@@ -1,0 +1,53 @@
+{
+  "env": {
+    "NODE_ENV": "development",
+    "NG_CLI_ANALYTICS": "false"
+  },
+  "permissions": {
+    "allow": [
+      "Read",
+      "Edit(src/**)",
+      "Edit(*.json)",
+      "Edit(*.md)",
+      "Edit(*.scss)",
+      "Edit(*.css)",
+      "Edit(*.html)",
+      "Edit(.eslintrc.*)",
+      "Edit(jest.config.*)",
+      "Edit(angular.json)",
+      "Edit(tsconfig.*)",
+      "Bash(ng:*)",
+      "Bash(npm run:*)",
+      "Bash(npm test:*)",
+      "Bash(npm install:*)",
+      "Bash(npm ci)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(git checkout:*)",
+      "Bash(npx ng generate module:*)",
+      "Bash(npx @angular/cli@latest new:*)",
+      "Bash(npx eslint:*)"
+    ],
+    "deny": [
+      "Edit(.env*)",
+      "Edit(node_modules/**)",
+      "Edit(dist/**)",
+      "Edit(.git/**)",
+      "Edit(package-lock.json)",
+      "Bash(sudo:*)",
+      "Bash(npm publish:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(git push:*)",
+      "Bash(git merge:*)",
+      "Bash(git rebase:*)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\Mohamed SayedT"
+    ]
+  },
+  "model": "claude-sonnet-4-20250514"
+}

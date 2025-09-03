@@ -24,6 +24,10 @@ public class BookService {
         return bookRepository.listAll().stream().map(this::toTO).toList();
     }
 
+    public List<BookTO> getAvailableBooks() {
+        return bookRepository.findAvailableBooks().stream().map(this::toTO).toList();
+    }
+
     public BookTO getBookById(Long id) {
         return bookRepository.findByIdOptional(id).map(this::toTO).orElse(null);
     }

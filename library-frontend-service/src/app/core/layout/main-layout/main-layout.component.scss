@@ -1,0 +1,404 @@
+@use '../../../theme/_variables' as vars;
+
+// Main Layout Container
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: vars.$library-warm-beige;
+  font-family: vars.$font-family-sans;
+}
+
+// Header Styles
+.main-header {
+  background: linear-gradient(135deg, vars.$library-deep-brown, vars.$library-medium-brown) !important;
+  color: vars.$library-warm-beige !important;
+  box-shadow: vars.$shadow-heavy !important;
+  z-index: 1000;
+  position: sticky;
+  top: 0;
+  padding: 0 vars.$spacing-md;
+  min-height: 64px;
+  
+  @media (max-width: vars.$breakpoint-mobile) {
+    padding: 0 vars.$spacing-sm;
+    min-height: 56px;
+  }
+}
+
+// Header Brand
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: vars.$spacing-sm;
+  margin-right: vars.$spacing-lg;
+  
+  .brand-icon {
+    font-size: 28px !important;
+    width: 28px !important;
+    height: 28px !important;
+    color: vars.$library-accent-gold !important;
+  }
+  
+  .brand-title {
+    font-family: vars.$font-family-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: vars.$library-warm-beige;
+    
+    @media (max-width: vars.$breakpoint-mobile) {
+      font-size: 1.1rem;
+      display: none; // Hide on very small screens
+    }
+  }
+}
+
+// Navigation
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: vars.$spacing-xs;
+  
+  @media (max-width: vars.$breakpoint-mobile) {
+    display: none; // Hide main nav on mobile, could add mobile menu later
+  }
+}
+
+.nav-button {
+  display: flex !important;
+  align-items: center !important;
+  gap: vars.$spacing-xs !important;
+  padding: vars.$spacing-sm vars.$spacing-md !important;
+  border-radius: vars.$border-radius !important;
+  color: rgba(vars.$library-warm-beige, 0.8) !important;
+  transition: all vars.$transition-fast !important;
+  min-width: auto !important;
+  
+  &:hover {
+    background-color: rgba(vars.$library-warm-beige, 0.1) !important;
+    color: vars.$library-warm-beige !important;
+    transform: translateY(-1px);
+  }
+  
+  &.active {
+    background-color: rgba(vars.$library-accent-gold, 0.2) !important;
+    color: vars.$library-accent-gold !important;
+    font-weight: 600;
+  }
+  
+  mat-icon {
+    font-size: 20px !important;
+    width: 20px !important;
+    height: 20px !important;
+  }
+  
+  .nav-label {
+    font-size: 0.9rem;
+    font-weight: inherit;
+  }
+}
+
+// Header Spacer
+.header-spacer {
+  flex: 1;
+}
+
+// User Section
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: vars.$spacing-sm;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: vars.$spacing-sm;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, vars.$library-accent-gold, #FFD54F);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(vars.$library-warm-beige, 0.3);
+  box-shadow: vars.$shadow-light;
+  
+  .avatar-text {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: vars.$library-deep-brown;
+  }
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  
+  &.mobile-hidden {
+    @media (max-width: vars.$breakpoint-mobile) {
+      display: none;
+    }
+  }
+  
+  .user-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: vars.$library-warm-beige;
+    line-height: 1.2;
+  }
+  
+  .user-role {
+    font-size: 0.75rem;
+    color: rgba(vars.$library-warm-beige, 0.7);
+    line-height: 1.2;
+  }
+}
+
+.user-menu-trigger {
+  color: vars.$library-warm-beige !important;
+  
+  &:hover {
+    background-color: rgba(vars.$library-warm-beige, 0.1) !important;
+  }
+}
+
+// Guest Section
+.guest-section {
+  display: flex;
+  align-items: center;
+}
+
+// User Menu Dropdown
+::ng-deep .user-menu {
+  .mat-mdc-menu-panel {
+    min-width: 280px !important;
+    border-radius: vars.$border-radius-lg !important;
+    box-shadow: vars.$shadow-heavy !important;
+    border: 1px solid rgba(vars.$library-medium-brown, 0.1) !important;
+  }
+}
+
+.menu-header {
+  padding: vars.$spacing-md;
+  background: linear-gradient(135deg, vars.$library-warm-beige, #F8F4E6);
+  border-bottom: 1px solid rgba(vars.$library-medium-brown, 0.1);
+}
+
+.menu-user-info {
+  display: flex;
+  align-items: center;
+  gap: vars.$spacing-sm;
+}
+
+.menu-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, vars.$library-accent-gold, #FFD54F);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(vars.$library-medium-brown, 0.2);
+  
+  .avatar-text {
+    font-size: 1rem;
+    font-weight: 600;
+    color: vars.$library-deep-brown;
+  }
+}
+
+.menu-user-details {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  
+  .menu-user-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: vars.$library-deep-brown;
+    line-height: 1.3;
+  }
+  
+  .menu-user-email {
+    font-size: 0.85rem;
+    color: vars.$library-medium-brown;
+    line-height: 1.3;
+  }
+}
+
+.logout-button {
+  color: vars.$library-error-red !important;
+  
+  &:hover {
+    background-color: rgba(vars.$library-error-red, 0.1) !important;
+  }
+  
+  .logout-spinner {
+    margin-left: vars.$spacing-sm;
+    
+    ::ng-deep circle {
+      stroke: vars.$library-error-red !important;
+    }
+  }
+}
+
+// Main Content
+.main-content {
+  flex: 1;
+  position: relative;
+  min-height: calc(100vh - 64px);
+  background: linear-gradient(
+    135deg,
+    vars.$library-warm-beige 0%,
+    #F3E5AB 30%,
+    vars.$library-warm-beige 100%
+  );
+  
+  @media (max-width: vars.$breakpoint-mobile) {
+    min-height: calc(100vh - 56px);
+  }
+}
+
+// Loading Overlay
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(vars.$library-warm-beige, 0.8);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: vars.$spacing-md;
+  
+  .loading-text {
+    font-size: 0.9rem;
+    color: vars.$library-medium-brown;
+    font-weight: 500;
+  }
+}
+
+// Loading State
+.main-layout.loading {
+  .main-header {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+}
+
+// Responsive Design
+@media (max-width: vars.$breakpoint-tablet) {
+  .header-nav {
+    gap: vars.$spacing-xs;
+    
+    .nav-button {
+      padding: vars.$spacing-sm !important;
+      
+      .nav-label {
+        display: none;
+      }
+    }
+  }
+}
+
+// Mobile-specific styles
+@media (max-width: vars.$breakpoint-mobile) {
+  .main-header {
+    .header-brand {
+      margin-right: vars.$spacing-sm;
+    }
+  }
+  
+  .user-avatar {
+    width: 36px;
+    height: 36px;
+    
+    .avatar-text {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+// High contrast mode
+@media (prefers-contrast: high) {
+  .main-header {
+    border-bottom: 2px solid vars.$library-deep-brown;
+  }
+  
+  .user-avatar,
+  .menu-avatar {
+    border-width: 3px;
+  }
+}
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .nav-button,
+  .user-menu-trigger,
+  .user-avatar,
+  .menu-avatar {
+    transition: none !important;
+  }
+  
+  .nav-button:hover {
+    transform: none !important;
+  }
+}
+
+// Snackbar styles (global override)
+::ng-deep {
+  .success-snackbar {
+    background: vars.$library-success-green !important;
+    color: white !important;
+  }
+
+  .error-snackbar {
+    background: vars.$library-error-red !important;
+    color: white !important;
+  }
+
+  .info-snackbar {
+    background: vars.$library-medium-brown !important;
+    color: vars.$library-warm-beige !important;
+  }
+  
+  // Material toolbar color override
+  .mat-toolbar {
+    color: inherit !important;
+  }
+  
+  // Material button hover states
+  .mat-mdc-button:not([disabled]):hover {
+    .mat-mdc-button-persistent-ripple::before {
+      opacity: 0.04 !important;
+    }
+  }
+  
+  // Material menu item hover
+  .mat-mdc-menu-item:hover {
+    .mat-mdc-menu-item-text {
+      color: vars.$library-deep-brown !important;
+    }
+  }
+  
+  // Material icon button hover
+  .mat-mdc-icon-button:hover {
+    .mat-mdc-button-persistent-ripple::before {
+      opacity: 0.04 !important;
+    }
+  }
+}

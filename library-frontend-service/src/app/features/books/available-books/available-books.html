@@ -1,0 +1,112 @@
+<div class="available-books-container">
+  <!-- Header Section -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">
+        <img src="/logo.png" alt="Library Logo" class="title-logo">
+        Available Books
+      </h1>
+      <p class="page-description">Discover our collection of books ready to borrow</p>
+    </div>
+    <div class="header-stats">
+      <div class="stat-card">
+        <span class="stat-number">{{ books().length }}</span>
+        <span class="stat-label">Available</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading()" class="loading-container">
+    <div class="loading-content">
+      <mat-spinner diameter="60"></mat-spinner>
+      <p class="loading-text">Loading available books...</p>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error() && !loading()" class="error-container">
+    <div class="error-content">
+      <mat-icon class="error-icon">error_outline</mat-icon>
+      <h3 class="error-title">Oops! Something went wrong</h3>
+      <p class="error-message">{{ error() }}</p>
+      <button mat-raised-button color="primary" (click)="retryLoading()" class="retry-button">
+        <mat-icon>refresh</mat-icon>
+        Try Again
+      </button>
+    </div>
+  </div>
+
+  <!-- Books Grid -->
+  <div *ngIf="!loading() && !error()" class="books-grid">
+    <!-- Empty State -->
+    <div *ngIf="books().length === 0" class="empty-state">
+      <div class="empty-content">
+        <mat-icon class="empty-icon">library_books</mat-icon>
+        <h3 class="empty-title">No Books Available</h3>
+        <p class="empty-message">All books are currently borrowed. Check back later!</p>
+        <button mat-raised-button color="primary" (click)="retryLoading()">
+          <mat-icon>refresh</mat-icon>
+          Refresh
+        </button>
+      </div>
+    </div>
+
+    <!-- Book Cards -->
+    <div *ngFor="let book of books(); trackBy: trackByTitle" class="book-card-wrapper">
+      <mat-card class="book-card" [class]="'availability-' + getAvailabilityStatus(book)">
+        <div class="card-header">
+          <div class="book-cover">
+            <div class="cover-placeholder">
+              <mat-icon class="book-icon">menu_book</mat-icon>
+            </div>
+            <div class="availability-badge" [class]="'badge-' + getAvailabilityStatus(book)">
+              <span class="availability-count">{{ book.availableCopies }}</span>
+              <span class="availability-text">left</span>
+            </div>
+          </div>
+        </div>
+        
+        <mat-card-content class="card-content">
+          <div class="book-info">
+            <h3 class="book-title">{{ book.title }}</h3>
+            <p class="book-author">
+              <mat-icon class="author-icon">person</mat-icon>
+              {{ book.author }}
+            </p>
+            
+            <div class="book-stats">
+              <div class="stat">
+                <mat-icon class="stat-icon">inventory</mat-icon>
+                <span class="stat-text">{{ book.totalCopies }} total copies</span>
+              </div>
+              <div class="availability-chip">
+                <mat-chip [class]="'chip-' + getAvailabilityStatus(book)">
+                  <mat-icon matChipAvatar>
+                    {{ getAvailabilityStatus(book) === 'high' ? 'check_circle' : 
+                       getAvailabilityStatus(book) === 'medium' ? 'schedule' : 'warning' }}
+                  </mat-icon>
+                  {{ getAvailabilityStatus(book) === 'high' ? 'Highly Available' : 
+                     getAvailabilityStatus(book) === 'medium' ? 'Limited Stock' : 'Low Stock' }}
+                </mat-chip>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions class="card-actions">
+          <button mat-raised-button color="primary" class="borrow-button" (click)="onBorrowBook(book)">
+            <mat-icon>library_add</mat-icon>
+            Borrow Book
+          </button>
+          <button mat-button class="details-button" (click)="onViewDetails(book)">
+            <mat-icon>info</mat-icon>
+            Details
+          </button>
+        </mat-card-actions>
+
+        <div class="card-glow"></div>
+      </mat-card>
+    </div>
+  </div>
+</div>

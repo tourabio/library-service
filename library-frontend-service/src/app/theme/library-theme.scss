@@ -1,0 +1,50 @@
+@use './variables' as vars;
+
+// Basic Material Design button styling
+.mat-mdc-raised-button,
+.mat-mdc-button,
+.mat-mdc-unelevated-button {
+  &.mat-primary {
+    background-color: vars.$library-medium-brown;
+    color: vars.$library-warm-beige;
+    
+    &:hover:not(:disabled) {
+      background-color: vars.$library-accent-gold;
+      color: vars.$library-deep-brown;
+    }
+  }
+  
+  &.mat-accent {
+    background-color: vars.$library-accent-gold;
+    color: vars.$library-deep-brown;
+  }
+  
+  &.mat-warn {
+    background-color: vars.$library-error-red;
+    color: white;
+  }
+}
+
+// Basic Material card styling
+.mat-mdc-card {
+  background-color: white;
+  box-shadow: vars.$shadow-light;
+  border-radius: vars.$border-radius-lg;
+  
+  &:hover {
+    box-shadow: vars.$shadow-medium;
+  }
+}
+
+// Angular Material Icon theming
+.mat-icon {
+  color: vars.$library-medium-brown;
+  
+  &.accent {
+    color: vars.$library-accent-gold;
+  }
+  
+  &.warn {
+    color: vars.$library-error-red;
+  }
+}

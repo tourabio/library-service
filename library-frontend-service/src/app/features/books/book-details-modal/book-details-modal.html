@@ -1,0 +1,157 @@
+<div class="book-details-modal">
+  <!-- Modal Header -->
+  <div class="modal-header" mat-dialog-title>
+    <div class="header-content">
+      <div class="title-section">
+        <img src="/logo.png" alt="Library Logo" class="modal-logo">
+        <h2 class="modal-title">Book Details</h2>
+      </div>
+      <button mat-icon-button class="close-button" (click)="onClose()" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal Content -->
+  <div class="modal-content" mat-dialog-content>
+    <div class="book-showcase">
+      <!-- Book Cover Section -->
+      <div class="book-cover-section">
+        <div class="book-cover-large">
+          <div class="cover-placeholder">
+            <mat-icon class="book-icon">menu_book</mat-icon>
+          </div>
+          
+          <!-- Availability Badge -->
+          <div class="availability-badge-large" [class]="'badge-' + getAvailabilityStatus()">
+            <div class="badge-content">
+              <span class="availability-count">{{ book.availableCopies }}</span>
+              <span class="availability-text">available</span>
+            </div>
+          </div>
+
+          <!-- Floating Particles Effect -->
+          <div class="floating-particles">
+            <div class="particle" *ngFor="let p of [1,2,3,4,5]"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Book Information Section -->
+      <div class="book-info-section">
+        <div class="book-main-info">
+          <h1 class="book-title">{{ book.title }}</h1>
+          
+          <div class="author-info">
+            <mat-icon class="author-icon">person</mat-icon>
+            <span class="author-name">{{ book.author }}</span>
+          </div>
+
+          <!-- Availability Status Chip -->
+          <div class="status-chip-container">
+            <mat-chip class="status-chip" [class]="'chip-' + getAvailabilityStatus()">
+              <mat-icon matChipAvatar>
+                {{ getAvailabilityStatus() === 'high' ? 'check_circle' : 
+                   getAvailabilityStatus() === 'medium' ? 'schedule' : 'warning' }}
+              </mat-icon>
+              {{ getAvailabilityLabel() }}
+            </mat-chip>
+          </div>
+
+          <mat-divider class="info-divider"></mat-divider>
+
+          <!-- Detailed Statistics -->
+          <div class="book-statistics">
+            <div class="stat-grid">
+              <div class="stat-item">
+                <div class="stat-icon-wrapper">
+                  <mat-icon class="stat-icon">inventory_2</mat-icon>
+                </div>
+                <div class="stat-content">
+                  <span class="stat-value">{{ book.totalCopies }}</span>
+                  <span class="stat-label">Total Copies</span>
+                </div>
+              </div>
+
+              <div class="stat-item">
+                <div class="stat-icon-wrapper">
+                  <mat-icon class="stat-icon">check_circle</mat-icon>
+                </div>
+                <div class="stat-content">
+                  <span class="stat-value">{{ book.availableCopies }}</span>
+                  <span class="stat-label">Available Now</span>
+                </div>
+              </div>
+
+              <div class="stat-item">
+                <div class="stat-icon-wrapper">
+                  <mat-icon class="stat-icon">people</mat-icon>
+                </div>
+                <div class="stat-content">
+                  <span class="stat-value">{{ book.totalCopies - book.availableCopies }}</span>
+                  <span class="stat-label">Currently Borrowed</span>
+                </div>
+              </div>
+
+              <div class="stat-item">
+                <div class="stat-icon-wrapper">
+                  <mat-icon class="stat-icon">percent</mat-icon>
+                </div>
+                <div class="stat-content">
+                  <span class="stat-value">{{ ((book.availableCopies / book.totalCopies) * 100).toFixed(0) }}%</span>
+                  <span class="stat-label">Availability</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional Info Cards -->
+          <div class="info-cards">
+            <div class="info-card">
+              <mat-icon class="info-card-icon">schedule</mat-icon>
+              <div class="info-card-content">
+                <span class="info-card-title">Loan Duration</span>
+                <span class="info-card-value">14 days</span>
+              </div>
+            </div>
+
+            <div class="info-card">
+              <mat-icon class="info-card-icon">local_library</mat-icon>
+              <div class="info-card-content">
+                <span class="info-card-title">Category</span>
+                <span class="info-card-value">General Collection</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Actions -->
+  <div class="modal-actions" mat-dialog-actions>
+    <div class="action-buttons">
+      <button mat-button class="cancel-button" (click)="onClose()">
+        <mat-icon>close</mat-icon>
+        Close
+      </button>
+      
+      <button 
+        mat-raised-button 
+        color="primary" 
+        class="borrow-button"
+        [disabled]="book.availableCopies <= 0"
+        (click)="onBorrowBook()">
+        <mat-icon>library_add</mat-icon>
+        Borrow This Book
+      </button>
+    </div>
+  </div>
+
+  <!-- Background Decorations -->
+  <div class="modal-background-decoration">
+    <div class="decoration-element decoration-1"></div>
+    <div class="decoration-element decoration-2"></div>
+    <div class="decoration-element decoration-3"></div>
+  </div>
+</div>

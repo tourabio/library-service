@@ -1,0 +1,313 @@
+@use '@angular/material' as mat;
+@use './app/theme/variables' as vars;
+@use './app/theme/mixins' as mixins;
+@use 'sass:color';
+
+@include mat.core();
+
+// Use brown color theme
+$library-primary: mat.m2-define-palette(mat.$m2-brown-palette, 700);
+$library-accent: mat.m2-define-palette(mat.$m2-amber-palette, 600);
+$library-warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+$library-theme: mat.m2-define-light-theme((
+  color: (
+    primary: $library-primary,
+    accent: $library-accent,
+    warn: $library-warn,
+  ),
+  typography: mat.m2-define-typography-config(),
+  density: 0,
+));
+
+@include mat.all-component-themes($library-theme);
+
+// Global Reset and Base Styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+  background-color: vars.$library-warm-beige;
+  color: vars.$library-deep-brown;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  
+  @include mixins.custom-scrollbar();
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  color: vars.$library-deep-brown;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+h1 { font-size: 2.5rem; margin-bottom: vars.$spacing-lg; }
+h2 { font-size: 2rem; margin-bottom: vars.$spacing-lg; }
+h3 { font-size: 1.75rem; margin-bottom: vars.$spacing-md; }
+h4 { font-size: 1.5rem; margin-bottom: vars.$spacing-md; }
+h5 { font-size: 1.25rem; margin-bottom: vars.$spacing-sm; }
+h6 { font-size: 1.125rem; margin-bottom: vars.$spacing-sm; }
+
+p {
+  margin-bottom: vars.$spacing-md;
+  line-height: 1.6;
+}
+
+// Links
+a {
+  color: vars.$library-medium-brown;
+  text-decoration: none;
+  transition: color vars.$transition-fast;
+  
+  &:hover {
+    color: vars.$library-accent-gold;
+  }
+  
+  &:focus-visible {
+    outline: 2px solid vars.$library-accent-gold;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+// Container Classes
+.container {
+  @include mixins.library-container();
+}
+
+.container-fluid {
+  width: 100%;
+  padding: 0 vars.$spacing-lg;
+  
+  @include mixins.respond-to(mobile) {
+    padding: 0 vars.$spacing-md;
+  }
+}
+
+// Button Classes
+.btn {
+  @include mixins.library-button();
+  
+  &.btn-secondary {
+    @include mixins.library-button(secondary);
+  }
+  
+  &.btn-accent {
+    @include mixins.library-button(accent);
+  }
+  
+  &.btn-small {
+    @include mixins.library-button(primary, small);
+  }
+  
+  &.btn-large {
+    @include mixins.library-button(primary, large);
+  }
+}
+
+// Card Classes
+.card {
+  @include mixins.library-card();
+  
+  &.card-elevated {
+    @include mixins.library-card(true);
+  }
+  
+  &.card-interactive {
+    @include mixins.library-card(false, true);
+  }
+}
+
+// Form Elements
+.form-input {
+  @include mixins.library-input();
+}
+
+// Loading States
+.loading {
+  @include mixins.loading-shimmer();
+  min-height: 200px;
+  border-radius: vars.$border-radius;
+}
+
+// Utility Classes
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+.text-justify { text-align: justify; }
+
+.font-serif { font-family: 'Georgia', 'Times New Roman', serif; }
+.font-sans { font-family: 'Roboto', 'Helvetica Neue', sans-serif; }
+
+// Spacing Utilities
+.m-0 { margin: 0; }
+.m-xs { margin: vars.$spacing-xs; }
+.m-sm { margin: vars.$spacing-sm; }
+.m-md { margin: vars.$spacing-md; }
+.m-lg { margin: vars.$spacing-lg; }
+.m-xl { margin: vars.$spacing-xl; }
+.m-xxl { margin: vars.$spacing-xxl; }
+
+.p-0 { padding: 0; }
+.p-xs { padding: vars.$spacing-xs; }
+.p-sm { padding: vars.$spacing-sm; }
+.p-md { padding: vars.$spacing-md; }
+.p-lg { padding: vars.$spacing-lg; }
+.p-xl { padding: vars.$spacing-xl; }
+.p-xxl { padding: vars.$spacing-xxl; }
+
+// Margin/Padding directional utilities
+@each $prop, $abbrev in (margin: m, padding: p) {
+  @each $size, $length in (
+    xs: vars.$spacing-xs,
+    sm: vars.$spacing-sm, 
+    md: vars.$spacing-md,
+    lg: vars.$spacing-lg,
+    xl: vars.$spacing-xl,
+    xxl: vars.$spacing-xxl
+  ) {
+    .#{$abbrev}t-#{$size} { #{$prop}-top: $length; }
+    .#{$abbrev}r-#{$size} { #{$prop}-right: $length; }
+    .#{$abbrev}b-#{$size} { #{$prop}-bottom: $length; }
+    .#{$abbrev}l-#{$size} { #{$prop}-left: $length; }
+    .#{$abbrev}x-#{$size} { 
+      #{$prop}-left: $length; 
+      #{$prop}-right: $length; 
+    }
+    .#{$abbrev}y-#{$size} { 
+      #{$prop}-top: $length; 
+      #{$prop}-bottom: $length; 
+    }
+  }
+}
+
+// Display Utilities
+.d-none { display: none; }
+.d-block { display: block; }
+.d-inline { display: inline; }
+.d-inline-block { display: inline-block; }
+.d-flex { display: flex; }
+.d-grid { display: grid; }
+
+// Flex Utilities
+.flex-row { flex-direction: row; }
+.flex-column { flex-direction: column; }
+.flex-wrap { flex-wrap: wrap; }
+.flex-nowrap { flex-wrap: nowrap; }
+.justify-start { justify-content: flex-start; }
+.justify-center { justify-content: center; }
+.justify-end { justify-content: flex-end; }
+.justify-between { justify-content: space-between; }
+.justify-around { justify-content: space-around; }
+.align-start { align-items: flex-start; }
+.align-center { align-items: center; }
+.align-end { align-items: flex-end; }
+.align-stretch { align-items: stretch; }
+
+// Border Radius Utilities
+.rounded-sm { border-radius: vars.$border-radius-sm; }
+.rounded { border-radius: vars.$border-radius; }
+.rounded-lg { border-radius: vars.$border-radius-lg; }
+.rounded-xl { border-radius: vars.$border-radius-xl; }
+.rounded-full { border-radius: 50%; }
+
+// Shadow Utilities
+.shadow-light { box-shadow: vars.$shadow-light; }
+.shadow-medium { box-shadow: vars.$shadow-medium; }
+.shadow-heavy { box-shadow: vars.$shadow-heavy; }
+
+// Responsive Utilities
+@include mixins.respond-to(mobile) {
+  .mobile-hidden { display: none; }
+  .mobile-visible { display: block; }
+}
+
+@include mixins.respond-to(tablet) {
+  .tablet-hidden { display: none; }
+  .tablet-visible { display: block; }
+}
+
+// Accessibility
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Focus visible styles for better keyboard navigation
+*:focus-visible {
+  outline: 2px solid vars.$library-accent-gold;
+  outline-offset: 2px;
+}
+
+// Smooth transitions for all interactive elements
+button, a, input, select, textarea {
+  transition: all vars.$transition-fast;
+}
+
+// Custom dialog styles
+.book-details-dialog {
+  .mat-mdi-dialog-container {
+    padding: 0 !important;
+    border-radius: vars.$border-radius-xl !important;
+    overflow: hidden !important;
+    box-shadow: 
+      0 50px 100px color.change(vars.$library-deep-brown, $alpha: 0.3),
+      0 20px 60px color.change(vars.$library-accent-gold, $alpha: 0.2) !important;
+  }
+}
+
+// Enhanced backdrop
+.cdk-overlay-backdrop.cdk-overlay-dark-backdrop {
+  background: color.change(vars.$library-deep-brown, $alpha: 0.6) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+// Modal animation classes
+.modal-fade-in {
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+.modal-slide-up {
+  animation: modalSlideUp 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@keyframes modalFadeIn {
+  from { 
+    opacity: 0; 
+    backdrop-filter: blur(0px);
+  }
+  to { 
+    opacity: 1; 
+    backdrop-filter: blur(8px);
+  }
+}
+
+@keyframes modalSlideUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(50px) scale(0.9); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
+}

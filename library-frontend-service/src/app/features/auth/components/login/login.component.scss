@@ -1,0 +1,291 @@
+@use '../../../../theme/_variables' as vars;
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  position: relative;
+  background: linear-gradient(135deg, vars.$library-warm-beige 0%, #F3E5AB 50%, vars.$library-light-brown 100%);
+  padding: vars.$spacing-md;
+  padding-top: 8vh;
+}
+
+.login-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(vars.$library-deep-brown, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(vars.$library-accent-gold, 0.1) 0%, transparent 50%),
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="books" patternUnits="userSpaceOnUse" width="100" height="100" patternTransform="rotate(45)"><rect width="2" height="100" fill="%23ffffff" opacity="0.05"/></pattern></defs><rect width="100%" height="100%" fill="url(%23books)"/></svg>');
+  z-index: 0;
+}
+
+.login-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: vars.$spacing-xl;
+}
+
+// Library Header
+.library-header {
+  text-align: center;
+  margin-bottom: vars.$spacing-lg;
+}
+
+.library-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  height: 140px;
+  background: white;
+  border-radius: 50%;
+  margin-bottom: vars.$spacing-md;
+  box-shadow: vars.$shadow-heavy;
+  padding: 2px;
+
+  img {
+    width: 136px;
+    height: 136px;
+    object-fit: contain;
+  }
+}
+
+.library-title {
+  font-family: vars.$font-family-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: vars.$library-deep-brown;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(vars.$library-deep-brown, 0.1);
+  
+  @media (max-width: vars.$breakpoint-mobile) {
+    font-size: 2rem;
+  }
+}
+
+.library-subtitle {
+  font-family: vars.$font-family-sans;
+  font-size: 1.1rem;
+  color: black;
+  margin: vars.$spacing-sm 0 0;
+  font-weight: 400;
+  text-shadow: 0 2px 4px rgba(white, 0.3);
+  
+  @media (max-width: vars.$breakpoint-mobile) {
+    font-size: 1rem;
+  }
+}
+
+// Login Card
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(white, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: vars.$border-radius-lg !important;
+  box-shadow: 
+    0 20px 40px rgba(vars.$library-deep-brown, 0.15),
+    0 0 0 1px rgba(vars.$library-medium-brown, 0.1) !important;
+  overflow: hidden;
+  transition: all vars.$transition-normal;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+      0 25px 50px rgba(vars.$library-deep-brown, 0.2),
+      0 0 0 1px rgba(vars.$library-medium-brown, 0.15) !important;
+  }
+}
+
+.login-card-header {
+  background: linear-gradient(135deg, vars.$library-deep-brown, vars.$library-medium-brown);
+  color: vars.$library-warm-beige;
+  padding: vars.$spacing-lg !important;
+  margin: 0 !important;
+  
+  .mat-card-title, .mat-card-subtitle {
+    color: inherit !important;
+    margin: 0 !important;
+  }
+}
+
+.login-title {
+  display: flex;
+  align-items: center;
+  gap: vars.$spacing-sm;
+  font-family: vars.$font-family-serif;
+  font-size: 1.5rem !important;
+  font-weight: 600;
+}
+
+.login-icon {
+  font-size: 28px !important;
+  width: 28px !important;
+  height: 28px !important;
+}
+
+.login-subtitle {
+  font-family: vars.$font-family-sans;
+  font-size: 0.95rem !important;
+  opacity: 0.9;
+  margin-top: vars.$spacing-xs !important;
+}
+
+.login-card-content {
+  padding: vars.$spacing-xl !important;
+}
+
+// Form Styles
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: vars.$spacing-lg;
+}
+
+.full-width {
+  width: 100%;
+}
+
+::ng-deep .login-component {
+  .mat-form-field-outline {
+    color: rgba(vars.$library-medium-brown, 0.3) !important;
+  }
+
+  .mat-form-field-outline-thick {
+    color: vars.$library-medium-brown !important;
+  }
+
+  .mat-form-field-label {
+    color: vars.$library-medium-brown !important;
+  }
+
+  .mat-input-element {
+    color: vars.$library-deep-brown !important;
+    font-family: vars.$font-family-sans;
+  }
+
+  .mat-form-field.mat-focused .mat-form-field-label {
+    color: vars.$library-accent-gold !important;
+  }
+
+  .mat-form-field.mat-focused .mat-form-field-outline-thick {
+    color: vars.$library-accent-gold !important;
+  }
+
+  .mat-icon {
+    color: vars.$library-medium-brown !important;
+  }
+
+  .mat-form-field.mat-focused .mat-icon {
+    color: vars.$library-accent-gold !important;
+  }
+}
+
+.login-button {
+  height: 50px !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  border-radius: vars.$border-radius !important;
+  margin-top: vars.$spacing-md;
+  background: linear-gradient(135deg, vars.$library-deep-brown, vars.$library-medium-brown) !important;
+  transition: all vars.$transition-normal !important;
+
+  &:hover:not([disabled]) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(vars.$library-deep-brown, 0.3) !important;
+    background: linear-gradient(135deg, vars.$library-medium-brown, vars.$library-accent-gold) !important;
+  }
+
+  &[disabled] {
+    background: rgba(vars.$library-light-brown, 0.3) !important;
+    color: rgba(vars.$library-medium-brown, 0.5) !important;
+  }
+
+  .button-content {
+    display: flex;
+    align-items: center;
+    gap: vars.$spacing-sm;
+    
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+
+
+// Responsive Design
+@media (max-width: vars.$breakpoint-mobile) {
+  .login-container {
+    padding: vars.$spacing-sm;
+    align-items: flex-start;
+    padding-top: vars.$spacing-xl;
+  }
+
+  .login-content {
+    gap: vars.$spacing-lg;
+  }
+
+  .login-card {
+    max-width: 100%;
+  }
+
+  .login-card-content {
+    padding: vars.$spacing-lg !important;
+  }
+}
+
+// Loading State
+.mat-spinner {
+  ::ng-deep circle {
+    stroke: vars.$library-warm-beige !important;
+  }
+}
+
+// Accessibility Enhancements
+@media (prefers-reduced-motion: reduce) {
+  .login-card,
+  .login-button,
+  .demo-button,
+  .footer-link,
+  .feature-item {
+    transition: none !important;
+  }
+
+  .login-card:hover,
+  .login-button:hover:not([disabled]) {
+    transform: none !important;
+  }
+}
+
+// High Contrast Mode
+@media (prefers-contrast: high) {
+  .login-card {
+    border: 2px solid vars.$library-deep-brown !important;
+  }
+}
+
+// Snackbar Styles (Global)
+::ng-deep {
+  .success-snackbar {
+    background: vars.$library-success-green !important;
+    color: white !important;
+  }
+
+  .error-snackbar {
+    background: vars.$library-error-red !important;
+    color: white !important;
+  }
+}

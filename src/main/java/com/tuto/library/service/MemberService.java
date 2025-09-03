@@ -4,6 +4,7 @@ import com.tuto.library.domain.Member;
 import com.tuto.library.exception.MemberNotFoundException;
 import com.tuto.library.repository.MemberRepository;
 import com.tuto.library.transferobjetcs.MemberTO;
+import com.tuto.library.transferobjetcs.AuthenticationTO;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -91,5 +92,25 @@ public class MemberService {
     public Member findMemberById(Long id) {
         return memberRepository.findByIdOptional(id)
                 .orElseThrow(() -> new MemberNotFoundException("Member with ID " + id + " not found."));
+    }
+
+    public AuthenticationTO authenticateMember(String name, String email) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Member name cannot be null or empty");
+        }
+        if (email == null || email.trim().isEmpty()) {
+            throw new IllegalArgumentException("Member email cannot be null or empty");
+        }
+        
+        return memberRepository.findByNameAndEmail(name, email)
+                .map(this::toAuthenticationTO)
+                .orElseThrow(() -> new MemberNotFoundException("Member with name '" + name + "' and email '" + email + "' not found."));
+    }
+
+    private AuthenticationTO toAuthenticationTO(Member member) {
+        if (member == null) {
+            return null;
+        }
+        return new AuthenticationTO(member.getId(), member.getName(), member.getEmail());
     }
 }

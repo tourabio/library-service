@@ -1,0 +1,169 @@
+<div class="main-layout" [class.loading]="isLoading()">
+  <!-- Main Header -->
+  <mat-toolbar class="main-header" role="banner">
+    <!-- Library Logo and Title -->
+    <div class="header-brand">
+      <mat-icon class="brand-icon" aria-hidden="true">local_library</mat-icon>
+      <span class="brand-title">Library Management</span>
+    </div>
+
+    <!-- Navigation Menu (Desktop) -->
+    <nav class="header-nav" role="navigation" aria-label="Main navigation">
+      <button 
+        mat-button 
+        class="nav-button"
+        [class.active]="isRouteActive('/dashboard')"
+        (click)="navigateTo('/dashboard')"
+        aria-label="Navigate to Dashboard">
+        <mat-icon>dashboard</mat-icon>
+        <span class="nav-label">Dashboard</span>
+      </button>
+      
+      <button 
+        mat-button 
+        class="nav-button"
+        [matMenuTriggerFor]="booksMenu"
+        [class.active]="isRouteActive('/books')"
+        aria-label="Books menu">
+        <mat-icon>book</mat-icon>
+        <span class="nav-label">Books</span>
+        <mat-icon class="dropdown-icon">arrow_drop_down</mat-icon>
+      </button>
+
+      <mat-menu #booksMenu="matMenu" class="nav-dropdown-menu">
+        <button mat-menu-item (click)="navigateTo('/books/available')">
+          <mat-icon>check_circle</mat-icon>
+          <span>Available Books</span>
+        </button>
+        <button mat-menu-item (click)="navigateTo('/books/all')">
+          <mat-icon>library_books</mat-icon>
+          <span>All Books</span>
+        </button>
+      </mat-menu>
+      
+      <button 
+        mat-button 
+        class="nav-button"
+        [class.active]="isRouteActive('/members')"
+        (click)="navigateTo('/members')"
+        aria-label="Navigate to Members">
+        <mat-icon>people</mat-icon>
+        <span class="nav-label">Members</span>
+      </button>
+      
+      <button 
+        mat-button 
+        class="nav-button"
+        [class.active]="isRouteActive('/loans')"
+        (click)="navigateTo('/loans')"
+        aria-label="Navigate to Loans">
+        <mat-icon>assignment</mat-icon>
+        <span class="nav-label">Loans</span>
+      </button>
+    </nav>
+
+    <!-- Spacer -->
+    <div class="header-spacer"></div>
+
+    <!-- User Profile Section -->
+    <div class="user-section" *ngIf="isAuthenticated(); else guestSection">
+      <!-- User Info -->
+      <div class="user-info">
+        <div class="user-avatar">
+          <span class="avatar-text">{{ memberInitials() }}</span>
+        </div>
+        <div class="user-details" [class.mobile-hidden]="true">
+          <span class="user-name">{{ memberDisplayName() }}</span>
+          <span class="user-role">Library Member</span>
+        </div>
+      </div>
+
+      <!-- User Menu -->
+      <button 
+        mat-icon-button 
+        class="user-menu-trigger"
+        [matMenuTriggerFor]="userMenu"
+        aria-label="Open user menu"
+        [attr.aria-expanded]="false">
+        <mat-icon>expand_more</mat-icon>
+      </button>
+
+      <!-- User Menu Dropdown -->
+      <mat-menu #userMenu="matMenu" class="user-menu">
+        <div class="menu-header">
+          <div class="menu-user-info">
+            <div class="menu-avatar">
+              <span class="avatar-text">{{ memberInitials() }}</span>
+            </div>
+            <div class="menu-user-details">
+              <span class="menu-user-name">{{ currentMember()?.name }}</span>
+              <span class="menu-user-email">{{ currentMember()?.email }}</span>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <button mat-menu-item (click)="onViewProfile()" disabled>
+          <mat-icon>person</mat-icon>
+          <span>View Profile</span>
+        </button>
+
+        <button mat-menu-item (click)="onSettings()" disabled>
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </button>
+
+        <button mat-menu-item (click)="refreshAuthStatus()">
+          <mat-icon>refresh</mat-icon>
+          <span>Refresh Session</span>
+        </button>
+
+        <mat-divider></mat-divider>
+
+        <button 
+          mat-menu-item 
+          class="logout-button"
+          (click)="onLogout()"
+          [disabled]="isLoading()"
+          aria-label="Logout from library system">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+          @if (isLoading()) {
+            <mat-spinner diameter="16" class="logout-spinner"></mat-spinner>
+          }
+        </button>
+      </mat-menu>
+    </div>
+
+    <!-- Guest Section (Fallback) -->
+    <ng-template #guestSection>
+      <div class="guest-section">
+        <button 
+          mat-raised-button 
+          color="primary"
+          (click)="navigateTo('/auth/login')"
+          aria-label="Login to library system">
+          <mat-icon>login</mat-icon>
+          Login
+        </button>
+      </div>
+    </ng-template>
+  </mat-toolbar>
+
+  <!-- Main Content Area -->
+  <main class="main-content" role="main">
+    <!-- Loading Overlay -->
+    @if (isLoading()) {
+      <div class="loading-overlay" aria-hidden="true">
+        <div class="loading-content">
+          <mat-spinner diameter="40"></mat-spinner>
+          <span class="loading-text">Processing...</span>
+        </div>
+      </div>
+    }
+
+    <!-- Router Outlet for Dynamic Content -->
+    <router-outlet></router-outlet>
+  </main>
+</div>

@@ -1,15 +1,23 @@
 quarkus:
+  # CORS Configuration
+  http:
+    root-path: /api
+    cors:
+      enabled: true
+      origins: http://localhost:4200
+      headers: accept,authorization,content-type,x-requested-with
+      methods: GET,POST,PUT,DELETE,OPTIONS
+      access-control-allow-credentials: true
+
+  # Application
+  application:
+    name: Library Service
+
+  # Database Configuration
   datasource:
     db-kind: postgresql
     devservices:
       image-name: postgres:16.3
       db-name: library
-
     username: libraryuser
     password: librarypass2025
-
-  application:
-    name: Library Service
-
-  http:
-    root-path: /api

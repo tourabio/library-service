@@ -1,0 +1,92 @@
+<div class="login-container">
+  <div class="login-background"></div>
+
+  <div class="login-content">
+    <!-- Library Header -->
+    <div class="library-header">
+      <div class="library-logo">
+        <img src="logo.png" alt="University Library Logo" />
+      </div>
+      <h1 class="library-title">University Library</h1>
+      <p class="library-subtitle">Please sign in to access your library account</p>
+    </div>
+
+    <!-- Login Card -->
+    <mat-card class="login-card" elevation="8">
+      <mat-card-header class="login-card-header">
+        <mat-card-title class="login-title">
+          <mat-icon class="login-icon">account_circle</mat-icon>
+          Member Login
+        </mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content class="login-card-content">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+          <!-- Name Field -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Full Name</mat-label>
+            <input
+              matInput
+              formControlName="name"
+              placeholder="Enter your full name"
+              autocomplete="name"
+              [attr.aria-describedby]="hasError('name') ? 'name-error' : null"
+            />
+            <mat-icon matPrefix>person</mat-icon>
+            <mat-error
+              id="name-error"
+              *ngIf="hasError('name')"
+              role="alert"
+            >
+              {{ getErrorMessage('name') }}
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Email Field -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email Address</mat-label>
+            <input
+              matInput
+              formControlName="email"
+              placeholder="Enter your email address"
+              autocomplete="email"
+              type="email"
+              [attr.aria-describedby]="hasError('email') ? 'email-error' : null"
+            />
+            <mat-icon matPrefix>email</mat-icon>
+            <mat-error
+              id="email-error"
+              *ngIf="hasError('email')"
+              role="alert"
+            >
+              {{ getErrorMessage('email') }}
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Login Button -->
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            class="login-button full-width"
+            [disabled]="loginForm.invalid || isLoading"
+            [attr.aria-label]="isLoading ? 'Signing in...' : 'Sign in to library'"
+          >
+            <span *ngIf="!isLoading" class="button-content">
+              <mat-icon>person</mat-icon>
+              Sign In
+            </span>
+            <mat-spinner
+              *ngIf="isLoading"
+              diameter="20"
+              color="accent"
+              aria-label="Signing in..."
+            ></mat-spinner>
+          </button>
+        </form>
+      </mat-card-content>
+
+    </mat-card>
+
+  </div>
+</div>

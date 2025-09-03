@@ -35,6 +35,12 @@ public class BookResource {
     }
 
     @GET
+    @Path("/available")
+    public List<BookTO> getAvailableBooks() {
+        return bookService.getAvailableBooks();
+    }
+
+    @GET
     @Path("/{id}")
     public Response getBookById(@PathParam("id") Long id) {
         BookTO bookTO = bookService.getBookById(id);

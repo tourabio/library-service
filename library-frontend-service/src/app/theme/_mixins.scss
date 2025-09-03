@@ -1,0 +1,211 @@
+@use './variables' as vars;
+@use '@angular/material' as mat;
+@use 'sass:color';
+
+// Modern Library Button Mixins
+@mixin library-button($variant: primary, $size: medium) {
+  border: none;
+  border-radius: vars.$border-radius;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all vars.$transition-normal;
+  outline: none;
+  
+  // Size variants
+  @if $size == small {
+    padding: vars.$spacing-sm vars.$spacing-md;
+    font-size: 0.875rem;
+  } @else if $size == large {
+    padding: vars.$spacing-lg vars.$spacing-xl;
+    font-size: 1.125rem;
+  } @else {
+    padding: vars.$spacing-md vars.$spacing-lg;
+    font-size: 1rem;
+  }
+  
+  // Style variants
+  @if $variant == primary {
+    background-color: vars.$library-medium-brown;
+    color: vars.$library-warm-beige;
+    
+    &:hover:not(:disabled) {
+      background-color: vars.$library-accent-gold;
+      color: vars.$library-deep-brown;
+      transform: translateY(-2px);
+      box-shadow: vars.$shadow-medium;
+    }
+    
+    &:focus-visible {
+      box-shadow: vars.$shadow-focus;
+    }
+  }
+  
+  @if $variant == secondary {
+    background-color: transparent;
+    color: vars.$library-medium-brown;
+    border: 2px solid vars.$library-medium-brown;
+    
+    &:hover:not(:disabled) {
+      background-color: vars.$library-medium-brown;
+      color: vars.$library-warm-beige;
+      transform: translateY(-1px);
+    }
+    
+    &:focus-visible {
+      box-shadow: vars.$shadow-focus;
+    }
+  }
+  
+  @if $variant == accent {
+    background-color: vars.$library-accent-gold;
+    color: vars.$library-deep-brown;
+    
+    &:hover:not(:disabled) {
+      background-color: color.scale(vars.$library-accent-gold, $lightness: -10%);
+      transform: translateY(-2px);
+      box-shadow: vars.$shadow-medium;
+    }
+    
+    &:focus-visible {
+      box-shadow: vars.$shadow-focus;
+    }
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+  
+  &:active:not(:disabled) {
+    transform: translateY(0) !important;
+  }
+}
+
+// Modern Card Component Mixin
+@mixin library-card($elevated: false, $interactive: false) {
+  background-color: #fff;
+  border: 1px solid vars.$border-color-light;
+  border-radius: vars.$border-radius-lg;
+  padding: vars.$spacing-lg;
+  transition: all vars.$transition-normal;
+  
+  @if $elevated {
+    box-shadow: vars.$shadow-medium;
+  } @else {
+    box-shadow: vars.$shadow-light;
+  }
+  
+  @if $interactive {
+    cursor: pointer;
+    
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: vars.$shadow-heavy;
+      border-color: vars.$library-accent-gold;
+    }
+    
+    &:active {
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// Input Field Styling
+@mixin library-input {
+  border: 2px solid vars.$border-color;
+  border-radius: vars.$border-radius;
+  padding: vars.$spacing-md;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  background-color: #fff;
+  transition: all vars.$transition-fast;
+  
+  &:focus {
+    outline: none;
+    border-color: vars.$library-accent-gold;
+    box-shadow: vars.$shadow-focus;
+  }
+  
+  &:hover:not(:focus) {
+    border-color: vars.$library-medium-brown;
+  }
+  
+  &::placeholder {
+    color: rgba(vars.$library-medium-brown, 0.6);
+  }
+}
+
+// Responsive Container
+@mixin library-container {
+  max-width: vars.$breakpoint-wide;
+  margin: 0 auto;
+  padding: 0 vars.$spacing-lg;
+  
+  @media (max-width: vars.$breakpoint-mobile) {
+    padding: 0 vars.$spacing-md;
+  }
+}
+
+// Responsive Breakpoint Mixins
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == mobile {
+    @media (max-width: vars.$breakpoint-mobile) {
+      @content;
+    }
+  }
+  @if $breakpoint == tablet {
+    @media (max-width: vars.$breakpoint-tablet) {
+      @content;
+    }
+  }
+  @if $breakpoint == desktop {
+    @media (min-width: vars.$breakpoint-desktop) {
+      @content;
+    }
+  }
+  @if $breakpoint == wide {
+    @media (min-width: vars.$breakpoint-wide) {
+      @content;
+    }
+  }
+}
+
+// Loading Animation
+@mixin loading-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(vars.$library-light-brown, 0.1) 25%,
+    rgba(vars.$library-accent-gold, 0.2) 50%,
+    rgba(vars.$library-light-brown, 0.1) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+// Scrollbar Styling
+@mixin custom-scrollbar($width: 8px) {
+  &::-webkit-scrollbar {
+    width: $width;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: vars.$library-warm-beige;
+    border-radius: vars.$border-radius;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: vars.$library-light-brown;
+    border-radius: vars.$border-radius;
+    
+    &:hover {
+      background: vars.$library-medium-brown;
+    }
+  }
+}
