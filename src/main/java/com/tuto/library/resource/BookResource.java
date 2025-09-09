@@ -81,13 +81,5 @@ public class BookResource {
         return Response.ok(updated).build();
     }
 
-    @DELETE
-    @Path("/{id}")
-    public Response deleteBook(@PathParam("id") Long id) {
-        boolean deleted = bookService.deleteBook(id);
-        if (!deleted) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        return Response.noContent().build();
-    }
+//TODO: Implement delete book
 }
