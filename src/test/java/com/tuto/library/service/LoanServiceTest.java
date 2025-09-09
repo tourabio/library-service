@@ -41,6 +41,17 @@ class LoanServiceTest {
 
     @Test
     void shouldThrowInvalidLoanOperationException_whenReturningNonActiveLoan() {
-        //TODO 1 : implement this test
+        // GIVEN
+        Loan loan = new Loan("loan2", "book2", "member2", LocalDate.now());
+        loan.setStatus(LoanStatus.RETURNED); // prêt déjà retourné
+
+        given(loanRepository.findById("loan2")).willReturn(Optional.of(loan));
+
+        // WHEN / THEN
+        org.assertj.core.api.Assertions.assertThatThrownBy(() -> loanService.processLoanReturn("loan2"))
+                .isInstanceOf(com.tuto.library.exception.InvalidLoanOperationException.class)
+                .hasMessageContaining("Loan with ID loan2 cannot be returned because it is not active.");
+
+        verify(loanRepository, never()).save(any(Loan.class));
     }
 }
