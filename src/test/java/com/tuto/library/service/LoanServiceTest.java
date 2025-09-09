@@ -1,9 +1,12 @@
 package com.tuto.library.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.catchThrowable;
 import static org.mockito.BDDMockito.*;
 import com.tuto.library.domain.Loan;
 import com.tuto.library.domain.LoanStatus;
+import com.tuto.library.exception.LoanNotFoundException;
+import com.tuto.library.exception.MemberNotFoundException;
 import com.tuto.library.repository.LoanRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,6 +14,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDate;
+import java.util.Optional;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.catchThrowable;
+import static org.mockito.BDDMockito.*;
+import com.tuto.library.exception.MemberNotFoundException;
+import com.tuto.library.repository.MemberRepository;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
@@ -41,5 +55,7 @@ class LoanServiceTest {
     @Test
     void shouldThrowInvalidLoanOperationException_whenReturningNonActiveLoan() {
         //TODO 1 : implement this test
-    }
+        }
+
 }
+
