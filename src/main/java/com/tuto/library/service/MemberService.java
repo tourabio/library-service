@@ -44,3 +44,4 @@ public class MemberService {
         return email != null && email.contains("@") && email.contains(".") && email.length() > 5;
     }
 }
+
