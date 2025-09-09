@@ -33,7 +33,7 @@ public class LoanService {
         validateLoanIsActive(id, loan);
         loan.setReturnDate(LocalDate.now());
         loan.setStatus(LoanStatus.RETURNED);
-//        bookService.returnBook(loan.getBookId());
+//        bookService.returnBook(loan.getBookId());9
         return loanRepository.save(loan);
     }
 

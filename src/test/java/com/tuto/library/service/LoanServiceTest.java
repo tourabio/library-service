@@ -1,9 +1,11 @@
 package com.tuto.library.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.catchThrowable;
 import static org.mockito.BDDMockito.*;
 import com.tuto.library.domain.Loan;
 import com.tuto.library.domain.LoanStatus;
+import com.tuto.library.exception.MemberNotFoundException;
 import com.tuto.library.repository.LoanRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,5 +43,16 @@ class LoanServiceTest {
     @Test
     void shouldThrowInvalidLoanOperationException_whenReturningNonActiveLoan() {
         //TODO 1 : implement this test
+        //given
+        given(loanRepository.findById("member1")).willReturn(Optional.empty());
+        // when
+        Throwable thrown = catchThrowable(() -> {
+            loanService.processLoanReturn("member1");
+        });
+        // then
+        assertThat(thrown)
+                .isInstanceOf(MemberNotFoundException.class)
+                .hasMessageContaining("Member with ID member1 not found.");
     }
-}
+    }
+
