@@ -27,7 +27,6 @@ class LoanServiceTest {
         // GIVEN
         Loan loan = new Loan("loan1", "book1", "member1", LocalDate.now());
         loan.setStatus(LoanStatus.ACTIVE);
-
         given(loanRepository.findById("loan1")).willReturn(Optional.of(loan));
         given(loanRepository.save(loan)).willReturn(loan);
 
