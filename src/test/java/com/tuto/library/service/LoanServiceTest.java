@@ -34,6 +34,7 @@ class LoanServiceTest {
         // WHEN
         Loan result = loanService.processLoanReturn("loan1");
 
+
         // THEN
         assertThat(result.getStatus()).isEqualTo(LoanStatus.RETURNED);
     }
