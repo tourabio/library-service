@@ -17,6 +17,18 @@ class MemberServiceTest {
 
     @Test
     void shouldThrowMemberNotFoundException_whenDeletingNonExistentMember() {
-        //TODO 1.0 : @Mohamed Sayed, implement this test
+        // given
+        Long nonExistentMemberId = 999L; // un id qui n'existe pas dans la base
+        MemberService memberService = new MemberService(memberRepository);
+        // (assure-toi que ton repo est un mock ou une base vide)
+
+        // when
+        Throwable thrown = catchThrowable(() -> {
+            memberService.deleteMember(nonExistentMemberId);
+        });
+
+        // then
+        assertThat(thrown)
+                .isInstanceOf(MemberNotFoundException.class)
+                .hasMessageContaining("not found");
     }
-}
