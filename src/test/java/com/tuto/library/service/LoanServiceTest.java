@@ -41,5 +41,6 @@ class LoanServiceTest {
     @Test
     void shouldThrowInvalidLoanOperationException_whenReturningNonActiveLoan() {
         //TODO 1 : implement this test
+
     }
 }
