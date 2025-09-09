@@ -17,9 +17,9 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-    private void checkMemberExists(final String member) {
-        if (memberRepository.findById(member).isEmpty()) {
-            throw new MemberNotFoundException("Member with ID " + member + " not found.");
+    private void checkMemberExists(final String memberID) {
+        if (memberRepository.findById(memberID).isEmpty()) {
+            throw new MemberNotFoundException("Member with ID " + memberID + " not found.");
         }
     }
 
