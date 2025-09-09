@@ -18,8 +18,16 @@ quarkus:
   # Database Configuration
   datasource:
     db-kind: postgresql
-    devservices:
+    services:
       image-name: postgres:16.3
       db-name: library
     username: libraryuser
     password: librarypass2025
+    jdbc:
+      url: jdbc:postgresql://localhost:52998/library
+
+  hibernate-orm:
+    schema-management:
+        strategy: drop-and-create # Use 'update'  if you want to keep data between restarts
+    log:
+      sql: true
