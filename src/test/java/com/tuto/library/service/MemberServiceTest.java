@@ -22,10 +22,10 @@ class MemberServiceTest {
 
     @Test
     void shouldThrowMemberNotFoundException_whenDeletingNonExistentMember() {
-        given(memberRepository.findById(memberid:member1)).willReturn(value:Option1.empty())
-        / when
+        given(memberRepository.findById("member1").willReturn(Optional.empty()))
+        // when
         Throwable thrown = catchThrowable(() -> {
-            memberService.deleteMember(id: "member1")
+            memberService.deleteMember( "member1")
         });
 // then
         assertThat(thrown)
