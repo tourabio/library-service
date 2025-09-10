@@ -5,6 +5,7 @@ import static org.assertj.core.api.BDDAssertions.catchThrowable;
 import static org.mockito.BDDMockito.*;
 import com.tuto.library.domain.Loan;
 import com.tuto.library.domain.LoanStatus;
+import com.tuto.library.exception.InvalidLoanOperationException;
 import com.tuto.library.exception.LoanNotFoundException;
 import com.tuto.library.exception.MemberNotFoundException;
 import com.tuto.library.repository.LoanRepository;
@@ -54,8 +55,23 @@ class LoanServiceTest {
 
     @Test
     void shouldThrowInvalidLoanOperationException_whenReturningNonActiveLoan() {
-        //TODO 1 : implement this test
-        }
+         Loan loan = new Loan("loan2", "book2", "member2", LocalDate.now());
+                loan.setStatus(LoanStatus.RETURNED);
 
-}
+                given(loanRepository.findById("loan2")).willReturn(Optional.of(loan));
+
+                // WHEN
+                Throwable thrown = catchThrowable(() ->
+                        loanService.processLoanReturn("loan2"));
+
+                // THEN
+                assertThat(thrown)
+                        .isInstanceOf(InvalidLoanOperationException.class)
+                        .hasMessageContaining("Loan with ID loan2 is not active.");
+            }
+
+
+
+
+    }
 
