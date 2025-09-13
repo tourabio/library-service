@@ -31,7 +31,7 @@ class MemberServiceTest {
         Throwable thrown = catchThrowable(() -> {
             memberService.deleteMember("member1");
         });
-// then
+        // then
         assertThat(thrown)
                 .isInstanceOf(MemberNotFoundException.class)
                 .hasMessageContaining("Member with ID member1 not found.");
