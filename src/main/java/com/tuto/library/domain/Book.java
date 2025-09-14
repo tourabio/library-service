@@ -12,7 +12,7 @@ public class Book {
         this.title = title;
         this.author = author;
         this.totalCopies = totalCopies;
-        this.availableCopies = totalCopies;
+        this.availableCopies = totalCopies; // initially all copies available
     }
 
     public String getId() {
@@ -37,5 +37,9 @@ public class Book {
 
     public void setAvailableCopies(int availableCopies) {
         this.availableCopies = availableCopies;
+    }
+
+    public int getMaxCopies() {
+        return totalCopies;
     }
 }

@@ -1,20 +1,25 @@
 package com.tuto.library.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.*;
+
 import com.tuto.library.domain.Loan;
 import com.tuto.library.domain.LoanStatus;
+import com.tuto.library.exception.InvalidLoanOperationException;
 import com.tuto.library.repository.LoanRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.time.LocalDate;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 class LoanServiceTest {
+
     @Mock
     LoanRepository loanRepository;
     @Mock
@@ -40,6 +45,15 @@ class LoanServiceTest {
 
     @Test
     void shouldThrowInvalidLoanOperationException_whenReturningNonActiveLoan() {
-        //TODO 1 : implement this test
+        // GIVEN
+        Loan loan = new Loan("loan2", "book2", "member2", LocalDate.now());
+        loan.setStatus(LoanStatus.RETURNED); // prêt déjà retourné
+
+        given(loanRepository.findById("loan2")).willReturn(Optional.of(loan));
+
+        // WHEN & THEN
+        assertThatThrownBy(() -> loanService.processLoanReturn("loan2"))
+                .isInstanceOf(InvalidLoanOperationException.class)
+                .hasMessageContaining("Loan with ID loan2 is not active."); // adapte le message exact
     }
 }
