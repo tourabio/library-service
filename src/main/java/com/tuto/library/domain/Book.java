@@ -15,7 +15,7 @@ public class Book {
         this.availableCopies = totalCopies;
     }
 
-    public String getId() {
+    public static String getId() {
         return id;
     }
 

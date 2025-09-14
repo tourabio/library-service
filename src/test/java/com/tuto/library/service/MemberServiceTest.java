@@ -24,7 +24,15 @@ class MemberServiceTest {
     @Test
     void shouldThrowMemberNotFoundException_whenDeletingNonExistentMember() {
         //TODO 1.0 : @Mohamed Sayed, implement this test
-        given(memberRepository.findById( memberid:"Member1")).willReturn(value.Optional.empty());
+        given(memberRepository.findById("Member1")).willReturn(Optional.empty());
+
+        Throwable thrown = catchThrowable(()->
+        {
+           memberService.deleteMember("Member1");
+        });
+        assertThat(thrown)
+                .isInstanceOf(MemberNotFoundException.class)
+                .hasMessageContaining("Member with ID member1 not found.");
     }
 }
 

@@ -8,4 +8,15 @@ public class BookService {
     public BookService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
+
+    public void borrowBook(final String book1) {
+        if (availableCopies <= 0) {
+            throw new IllegalStateException("No copies available");
+        }
+        availableCopies--;
+    }
+}
+public void retBook(final String book1) {
+    if (availableCopies < totalCopies )
+    availableCopies++;
 }
