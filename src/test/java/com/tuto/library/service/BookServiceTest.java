@@ -45,7 +45,7 @@ class BookServiceTest {
     @Test
     void shouldReturnTrue_whenBookIsAvailable() {
         // Given
-        Book availableBook = new Book("book1","Test Title","Test Author",5);  // Assume constructor or default sets isAvailable to true, or set it explicitly
+        Book availableBook = new Book("book1", "Test Title", "Test Author", 5);  // Assume constructor or default sets isAvailable to true, or set it explicitly
         given(bookRepository.findById("book1")).willReturn(Optional.of(availableBook));
 
         // When
@@ -55,6 +55,7 @@ class BookServiceTest {
         assertThat(result).isTrue();
 
     }
+
     @Test
     void shouldDecreaseAvailableCopies_whenBorrowingBook() {
         // Given
@@ -68,6 +69,7 @@ class BookServiceTest {
         assertThat(book.getAvailableCopies()).isEqualTo(4);  // Decreased from 5 to 4
         verify(bookRepository).save(book);  // Ensure save is called to persist the change
     }
+
     @Test
     void shouldThrowBookNotAvailableException_whenBorrowingBookWithNoCopies() {
         // Given
@@ -99,6 +101,7 @@ class BookServiceTest {
         verify(bookRepository).save(book);  // Ensure save is called
 
     }
+
     @Test
     void shouldThrowInvalidLoanOperationException_whenReturningBookWithMaxCopies() {
         // Given
@@ -115,7 +118,5 @@ class BookServiceTest {
                 .hasMessageContaining("Cannot return book with ID book1: all copies are already available");
     }
 }
-
-
 
 

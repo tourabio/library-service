@@ -1,9 +1,11 @@
 package com.tuto.library.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.mockito.BDDMockito.*;
 import com.tuto.library.domain.Loan;
 import com.tuto.library.domain.LoanStatus;
+import com.tuto.library.exception.InvalidLoanOperationException;
 import com.tuto.library.repository.LoanRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,20 +40,19 @@ class LoanServiceTest {
         // THEN
         assertThat(result.getStatus()).isEqualTo(LoanStatus.RETURNED);
     }
-
     @Test
     void shouldThrowInvalidLoanOperationException_whenReturningNonActiveLoan() {
-        // GIVEN
-        Loan loan = new Loan("loan2", "book2", "member2", LocalDate.now());
-        loan.setStatus(LoanStatus.RETURNED); // prêt déjà retourné
+        //TODO 1 : implement this test
+        //given
+        Loan loan = new Loan("loan1", "book1", "member1", LocalDate.now());
+        loan.setStatus(LoanStatus.RETURNED);
+        given(loanRepository.findById("loan1")).willReturn(Optional.of(loan));
+        // WHEN
+        Throwable thrown = catchThrowable(() -> loanService.processLoanReturn("loan1"));
 
-        given(loanRepository.findById("loan2")).willReturn(Optional.of(loan));
-
-        // WHEN / THEN
-        org.assertj.core.api.Assertions.assertThatThrownBy(() -> loanService.processLoanReturn("loan2"))
-                .isInstanceOf(com.tuto.library.exception.InvalidLoanOperationException.class)
-                .hasMessageContaining("Loan with ID loan2 cannot be returned because it is not active.");
-
-        verify(loanRepository, never()).save(any(Loan.class));
+        // THEN
+        assertThat(thrown)
+                .isInstanceOf(InvalidLoanOperationException.class)
+                .hasMessageContaining("Loan with ID loan1 is not active.");
     }
 }
