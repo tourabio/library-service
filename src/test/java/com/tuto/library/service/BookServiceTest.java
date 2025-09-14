@@ -1,5 +1,6 @@
 package com.tuto.library.service;
 
+import com.tuto.library.exception.BookNotFoundException;
 import com.tuto.library.repository.BookRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,9 +8,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-//TODO 2: implement the tests below using TDD approach
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
+
 @ExtendWith(MockitoExtension.class)
 class BookServiceTest {
+
     @Mock
     BookRepository bookRepository;
 
@@ -18,7 +24,12 @@ class BookServiceTest {
 
     @Test
     void shouldThrowBookNotFoundException_whenReturningBookByIdThatDoesNotExist() {
-        //TODO 2.0: @Mohamed sayed, implement this test
+        // Given
+        Long nonExistentBookId = 1L;
+        when(bookRepository.findById(nonExistentBookId)).thenReturn(Optional.empty());
+
+        // When & Then
+        assertThrows(BookNotFoundException.class, () -> bookService.returnBook(nonExistentBookId));
     }
 
     @Test
