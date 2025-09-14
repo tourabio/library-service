@@ -2,9 +2,11 @@ package com.tuto.library.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.catchThrowable;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.BDDMockito.*;
 import com.tuto.library.domain.Loan;
 import com.tuto.library.domain.LoanStatus;
+import com.tuto.library.exception.InvalidLoanOperationException;
 import com.tuto.library.exception.MemberNotFoundException;
 import com.tuto.library.repository.LoanRepository;
 import org.junit.jupiter.api.Test;
@@ -43,16 +45,23 @@ class LoanServiceTest {
     @Test
     void shouldThrowInvalidLoanOperationException_whenReturningNonActiveLoan() {
         //TODO 1 : implement this test
-        //given
-        given(loanRepository.findById("member1")).willReturn(Optional.empty());
-        // when
-        Throwable thrown = catchThrowable(() -> {
-            loanService.processLoanReturn("member1");
-        });
-        // then
-        assertThat(thrown)
-                .isInstanceOf(MemberNotFoundException.class)
-                .hasMessageContaining("Member with ID member1 not found.");
+        // GIVEN
+        Loan loan = new Loan("loan2", "book2", "member2", LocalDate.now());
+        loan.setStatus(LoanStatus.RETURNED);
+        given(loanRepository.findById("loan2")).willReturn(Optional.of(loan));
+
+        // WHEN & THEN
+        InvalidLoanOperationException exception = null;
+        try {
+            loanService.processLoanReturn("loan2");
+            fail("Expected InvalidLoanOperationException to be thrown");
+        } catch (InvalidLoanOperationException e) {
+            exception = e;
+        }
+
+        // THEN
+        assertThat(exception)
+                .hasMessageContaining("Loan with ID " + "loan2" + " is not active.");
     }
     }
 
