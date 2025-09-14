@@ -1,5 +1,8 @@
 package com.tuto.library.domain;
 
+import com.tuto.library.exception.BookNotAvailableException;
+import com.tuto.library.exception.InvalidLoanOperationException;
+
 public class Book {
     private final String id;
     private final String title;
@@ -37,5 +40,24 @@ public class Book {
 
     public void setAvailableCopies(int availableCopies) {
         this.availableCopies = availableCopies;
+    }
+
+    // ✅ for tests
+    public boolean isAvailable() {
+        return availableCopies > 0;
+    }
+
+    public void borrow() {
+        if (availableCopies <= 0) {
+            throw new BookNotAvailableException("Book not available: " + id);
+        }
+        availableCopies--;
+    }
+
+    public void returnBook() {
+        if (availableCopies >= totalCopies) {
+            throw new InvalidLoanOperationException("Book already at max copies: " + id);
+        }
+        availableCopies++;
     }
 }
