@@ -1,7 +1,9 @@
 package com.tuto.library.service;
 
+import com.tuto.library.domain.Book;
 import com.tuto.library.domain.Loan;
 import com.tuto.library.domain.LoanStatus;
+import com.tuto.library.exception.BookNotAvailableException;
 import com.tuto.library.exception.InvalidLoanOperationException;
 import com.tuto.library.exception.LoanNotFoundException;
 import com.tuto.library.repository.LoanRepository;
@@ -17,9 +19,12 @@ public class LoanService {
     }
 
     public Loan createLoan(Loan loan) {
-//        Book book = bookService.findBookById(loan.getBookId());
-//        bookService.isBookAvailable(book);
-//        bookService.borrowBook(book);
+        Book book = bookService.findBookById(loan.getBookId());
+        if (!bookService.isBookAvailable(book)) {
+            throw new BookNotAvailableException("Book with ID " + book.getId() + " is not available.");
+        }
+        bookService.borrowBook(book);
+
         return loanRepository.save(loan);
     }
 
@@ -33,7 +38,7 @@ public class LoanService {
         validateLoanIsActive(id, loan);
         loan.setReturnDate(LocalDate.now());
         loan.setStatus(LoanStatus.RETURNED);
-//        bookService.returnBook(loan.getBookId());
+        bookService.returnBook(loan.getBookId());
         return loanRepository.save(loan);
     }
 
