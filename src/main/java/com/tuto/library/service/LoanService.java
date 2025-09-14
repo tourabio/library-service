@@ -37,7 +37,7 @@ public class LoanService {
         return loanRepository.save(loan);
     }
 
-    private void validateLoanIsActive(final String id, final Loan loan) {
+    void validateLoanIsActive(final String id, final Loan loan) {
         if (loan.getStatus() != LoanStatus.ACTIVE) {
             throw new InvalidLoanOperationException("Loan with ID " + id + " is not active.");
         }
