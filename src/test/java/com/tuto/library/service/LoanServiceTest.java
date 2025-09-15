@@ -56,4 +56,4 @@ class LoanServiceTest {
                 .isInstanceOf(InvalidLoanOperationException.class)
                 .hasMessageContaining("is not active"); // Plus générique
     }
-}
+}c
