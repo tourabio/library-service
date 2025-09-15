@@ -287,7 +287,6 @@ The BookService tests should be implemented using the Test-Driven Development (T
 
 
 
-
 **TDD Process Reminder for Students**: 
 1. Watch as the instructor writes the failing test first (Red phase)
 2. Observe the minimal implementation to make the test pass (Green phase)  
