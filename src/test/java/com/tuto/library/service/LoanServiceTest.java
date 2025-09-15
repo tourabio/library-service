@@ -1,6 +1,7 @@
 package com.tuto.library.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.*;
 import com.tuto.library.domain.Loan;
 import com.tuto.library.domain.LoanStatus;
@@ -12,13 +13,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDate;
 import java.util.Optional;
+import com.tuto.library.exception.InvalidLoanOperationException;
+
 
 @ExtendWith(MockitoExtension.class)
 class LoanServiceTest {
     @Mock
     LoanRepository loanRepository;
-    @Mock
-    BookService bookService;
     @InjectMocks
     LoanService loanService;
 
@@ -41,5 +42,18 @@ class LoanServiceTest {
     @Test
     void shouldThrowInvalidLoanOperationException_whenReturningNonActiveLoan() {
         //TODO 1 : implement this test
+        // GIVEN
+        Loan loan = new Loan("loan1", "book1", "member1", LocalDate.now());
+        loan.setStatus(LoanStatus.RETURNED);
+
+        given(loanRepository.findById("loan1")).willReturn(Optional.of(loan));
+
+        // WHEN
+        Throwable thrown = catchThrowable (()->loanService.processLoanReturn("loan1"));
+
+        // THEN
+        assertThat(thrown)
+                .isInstanceOf(InvalidLoanOperationException.class)
+                .hasMessageContaining("is not active"); // Plus générique
     }
 }
