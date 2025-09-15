@@ -63,7 +63,7 @@ class BookServiceTest {
         // WHEN
         bookService.borrowBook("book1");
 
-        // THEN
+        // THENgit
         assertThat(book.getAvailableCopies()).isEqualTo(1);
     }
 
